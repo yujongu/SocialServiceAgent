@@ -1,0 +1,75 @@
+<resources>
+    <string name = "app_name">SocialServiceAgent</string>
+    <string name = "kakao_app_key">07125de3b44bea5ded817295bd683ee7</string>
+    <string name = "monthDateText">%d월 %d일</string>
+    <string name = "yearMonthText">%d년 %d월</string>
+
+    <string-array name = "Military_Types">
+        <item>Army</item>
+        <item>Marine</item>
+        <item>Navy</item>
+        <item>Airforce</item>
+        <item>Police</item>
+        <item>SSA</item>
+        <item>Fire</item>
+    </string-array>
+
+    <string-array name = "Time_Schedule">
+        <item>9:00</item>
+        <item>9:10</item>
+        <item>9:20</item>
+        <item>9:30</item>
+        <item>9:40</item>
+        <item>9:50</item>
+        <item>10:00</item>
+        <item>10:10</item>
+        <item>10:20</item>
+        <item>10:30</item>
+        <item>10:40</item>
+        <item>10:50</item>
+        <item>11:00</item>
+        <item>11:10</item>
+        <item>11:20</item>
+        <item>11:30</item>
+        <item>11:40</item>
+        <item>11:50</item>
+        <item>12:00</item>
+        <item>12:10</item>
+        <item>12:20</item>
+        <item>12:30</item>
+        <item>12:40</item>
+        <item>12:50</item>
+        <item>13:00</item>
+        <item>13:10</item>
+        <item>13:20</item>
+        <item>13:30</item>
+        <item>13:40</item>
+        <item>13:50</item>
+        <item>14:00</item>
+        <item>14:10</item>
+        <item>14:20</item>
+        <item>14:30</item>
+        <item>14:40</item>
+        <item>14:50</item>
+        <item>15:00</item>
+        <item>15:10</item>
+        <item>15:20</item>
+        <item>15:30</item>
+        <item>15:40</item>
+        <item>15:50</item>
+        <item>16:00</item>
+        <item>16:10</item>
+        <item>16:20</item>
+        <item>16:30</item>
+        <item>16:40</item>
+        <item>16:50</item>
+        <item>17:00</item>
+        <item>17:10</item>
+        <item>17:20</item>
+        <item>17:30</item>
+        <item>17:40</item>
+        <item>17:50</item>
+        <item>18:00</item>
+    </string-array>
+
+</resources>

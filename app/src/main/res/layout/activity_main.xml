@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:layout_margin="6dp">
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/profileimg"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnProfile"
+                android:scaleType="fitCenter"
+                android:padding="6dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="on click move to profile page" />
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_toStartOf="@id/tvCurrMonth"
+                android:layout_centerVertical="true"
+                android:src="@drawable/left"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnPrevMonth"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Selected Month"
+                android:gravity="center"
+                android:id="@+id/tvCurrMonth"
+                android:layout_centerInParent="true"
+                android:textSize="16sp"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_toEndOf="@id/tvCurrMonth"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnNextMonth"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                />
+
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/lookingglass"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:id="@+id/btnFindToday"
+                android:padding="6dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="일"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="월"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="화"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="수"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="목"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="금"
+                android:gravity="center"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="토"
+                android:gravity="center"
+                android:textSize="16sp"/>
+
+            <!--    days of the week    -->
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+
+    <ImageButton
+        android:layout_width = "50dp"
+        android:layout_height = "50dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/plus"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_above="@+id/btnAddEvent"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:id="@+id/btnU"/>
+
+    <ImageButton
+        android:layout_width = "50dp"
+        android:layout_height = "50dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/plus"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_above="@id/btnL"
+        android:layout_toStartOf="@id/btnU"
+        android:visibility="gone"
+        android:id="@+id/btnC"/>
+
+    <ImageButton
+        android:layout_width = "50dp"
+        android:layout_height = "50dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/plus"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/btnAddEvent"
+        android:visibility="gone"
+        android:id="@+id/btnL"/>
+
+    <ImageButton
+        android:layout_width = "50dp"
+        android:layout_height = "50dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/plus"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btnAddEvent"/>
+
+</RelativeLayout>

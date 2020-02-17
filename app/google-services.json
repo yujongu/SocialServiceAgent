@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "695657697986",
+    "firebase_url": "https://ssa-project-c1af9.firebaseio.com",
+    "project_id": "ssa-project-c1af9",
+    "storage_bucket": "ssa-project-c1af9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695657697986:android:18a72d855b15affc33e15b",
+        "android_client_info": {
+          "package_name": "com.yujongu.socialserviceagent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695657697986-3unoldk7t9tbnj8vjvatdn4umo7qhn47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yujongu.socialserviceagent",
+            "certificate_hash": "a4b184583c86789e0a6e706a18572f30eff3da2e"
+          }
+        },
+        {
+          "client_id": "695657697986-qed5n98i4eq689q30krvc0m29294vj8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsL2N-TG1weOyFTaxpWTpRtkwQBY4eht0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695657697986-qed5n98i4eq689q30krvc0m29294vj8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
