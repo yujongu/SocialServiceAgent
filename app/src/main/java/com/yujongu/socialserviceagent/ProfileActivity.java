@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity{
     private TextView startingDateTv, endingDateTv;
     private TextView totalDaysTv;
     private TextView discountDaysTv;
-//    private Button editProfileBtn;
+    private Button editProfileBtn;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
@@ -81,11 +81,15 @@ public class ProfileActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
+
         pbProgress = findViewById(R.id.timeLeftPb);
         progressTv = findViewById(R.id.tvProgress);
 
         profileIv = findViewById(R.id.profile_image);
         profileNameTv = findViewById(R.id.profile_name);
+
+        editProfileBtn = findViewById(R.id.btnEditProfile);
+
         mTypeSpinner = findViewById(R.id.militarySpinner);
 
         if (sharedPreference.loadStringData(context, "MilitaryType") != null){
@@ -107,6 +111,7 @@ public class ProfileActivity extends AppCompatActivity{
         mTypeSpinner.setOnItemSelectedListener(avSelectedListener);
 
         startingDateTv.setOnClickListener(listener);
+        editProfileBtn.setOnClickListener(listener);
     }
 
     private void setProfilePicture(){
@@ -275,6 +280,10 @@ public class ProfileActivity extends AppCompatActivity{
                     }, year, month, date);
                     datePickerDialog.show();
                     break;
+
+                case R.id.btnEditProfile:
+                    redirectEditProfileActivity();
+                    break;
             }
         }
     };
@@ -321,6 +330,12 @@ public class ProfileActivity extends AppCompatActivity{
 
     private void redirectMainActivity(){
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void redirectEditProfileActivity(){
+        Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
         startActivity(intent);
         finish();
     }
