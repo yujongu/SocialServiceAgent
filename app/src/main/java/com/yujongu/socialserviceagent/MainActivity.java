@@ -153,12 +153,46 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btnPrevMonth:
                     calendar.add(Calendar.MONTH, -1);
                     setMCalendarData(calendar);
+
+                    boolean checkClicked = false;
+                    for (int i = 0; i < mCalendarData.size(); i++){
+                        if (mCalendarData.get(i).isClicked()){
+                            checkClicked = true;
+                        }
+                    }
+                    if (!checkClicked){
+                        for (int i = 0; i < mCalendarData.size(); i++){
+                            if (mCalendarData.get(i).getDate() == 1){
+                                mCalendarData.get(i).setClicked(true);
+                                break;
+                            }
+                        }
+                    }
+
+
+
                     mCalendarAdapter.setCalendarList(mCalendarData);
                     break;
 
                 case R.id.btnNextMonth:
                     calendar.add(Calendar.MONTH, 1);
                     setMCalendarData(calendar);
+
+                    checkClicked = false;
+                    for (int i = 0; i < mCalendarData.size(); i++){
+                        if (mCalendarData.get(i).isClicked()){
+                            checkClicked = true;
+                        }
+                    }
+                    if (!checkClicked){
+                        for (int i = 0; i < mCalendarData.size(); i++){
+                            if (mCalendarData.get(i).getDate() == 1){
+                                mCalendarData.get(i).setClicked(true);
+                                break;
+                            }
+                        }
+                    }
+
                     mCalendarAdapter.setCalendarList(mCalendarData);
                     break;
 

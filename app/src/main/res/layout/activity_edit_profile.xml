@@ -1,10 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
-    tools:context = ".EditProfileActivity">
+    tools:context = ".EditProfileActivity"
+    android:padding="10dp">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content">
+        <Button
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="cancel"
+            android:id="@+id/btnCancel"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="Save"
+            android:id="@+id/btnSave"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ep_profile_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorSSAPrimaryDark"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ep_profile_image"
+        android:id="@+id/ep_profile_name"
+        android:textSize="26sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        />
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_below="@+id/ep_profile_name"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="복무 제도"/>
+
+        <RelativeLayout
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content">
+            <Spinner
+                android:layout_marginStart="-8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ep_militarySpinner"
+                android:entries="@array/Military_Types"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ep_TvMilitaryName"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true"
+                />
+        </RelativeLayout>
+
+
+
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="소집 날짜"/>
+
+        <TextView
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:hint="날짜를 선택해 주세요"
+            android:id="@+id/epTvStartingDate"
+            android:background="?attr/editTextBackground"
+            android:gravity="center_vertical"
+            />
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 연가 시간"/>
+
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:hint="1일 연가 = 8시간"/>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 병가 시간"/>
+
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:hint="1일 병가 = 8시간"/>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="복무 연장 일수"/>
+
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:text="0"
+            android:textSize="16sp"
+            android:hint="분할복무 일수"
+            android:id="@+id/ep_TvPersonalLeave"
+            android:inputType="date"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

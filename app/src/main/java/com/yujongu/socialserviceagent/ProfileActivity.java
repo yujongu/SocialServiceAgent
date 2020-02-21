@@ -34,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity{
 
     //todo set multiple friend profiles to view
-    Activity context = this;
+    Activity context = ProfileActivity.this;
 
     private ProfileInfo me;
 
@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity{
     private TextView startingDateTv, endingDateTv;
     private TextView totalDaysTv;
     private TextView discountDaysTv;
+    private TextView personalLeaveTv;
     private Button editProfileBtn;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
@@ -61,32 +62,20 @@ public class ProfileActivity extends AppCompatActivity{
         initInstances();
         eventListeners();
 
-        setProfilePicture();
     }
 
 
 
     private void initInstances(){
         sharedPreference = new SharedPreference();
-        me = new ProfileInfo(
-                sharedPreference.loadStringData(context, "ProfileName"),
-                sharedPreference.loadStringData(context, "ProfilePicUrl")
-        );
-
-        try {
-            if (sharedPreference.loadStringData(context, "StartingDate") != null){
-                me.setStartService(df.parse(sharedPreference.loadStringData(context, "StartingDate")));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
 
         pbProgress = findViewById(R.id.timeLeftPb);
         progressTv = findViewById(R.id.tvProgress);
 
         profileIv = findViewById(R.id.profile_image);
         profileNameTv = findViewById(R.id.profile_name);
+
+        setProfileInfo();
 
         editProfileBtn = findViewById(R.id.btnEditProfile);
 
@@ -105,6 +94,12 @@ public class ProfileActivity extends AppCompatActivity{
 
         totalDaysTv = findViewById(R.id.TvTotalDays);
         discountDaysTv = findViewById(R.id.TvDiscountDays);
+        personalLeaveTv = findViewById(R.id.TvPersonalLeave);
+        if (sharedPreference.loadStringData(context, "PersonalLeaveDays") != null){
+            personalLeaveTv.setText(sharedPreference.loadStringData(context, "PersonalLeaveDays"));
+        } else {
+            sharedPreference.saveData(context, "PersonalLeaveDays", String.valueOf(0));
+        }
     }
 
     private void eventListeners(){
@@ -114,7 +109,21 @@ public class ProfileActivity extends AppCompatActivity{
         editProfileBtn.setOnClickListener(listener);
     }
 
-    private void setProfilePicture(){
+    private void setProfileInfo(){
+        //fetch info from sharedPreference and save to me.
+        me = new ProfileInfo(
+                sharedPreference.loadStringData(context, "ProfileName"),
+                sharedPreference.loadStringData(context, "ProfilePicUrl")
+        );
+
+        try {
+            if (sharedPreference.loadStringData(context, "StartingDate") != null){
+                me.setStartService(df.parse(sharedPreference.loadStringData(context, "StartingDate")));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         //profileImage
         if (me.getPictureUrl().equals("")){
             profileIv.setImageResource(R.drawable.kakao_default_profile_image);
@@ -175,7 +184,6 @@ public class ProfileActivity extends AppCompatActivity{
         Log.i("TotalDay", String.valueOf(totalDiffDays));
         totalDaysTv.setText(totalDiffDays + "일");
         discountDaysTv.setText(discountDays + "일");
-
         return calendar.getTime();
     }
 
@@ -251,35 +259,35 @@ public class ProfileActivity extends AppCompatActivity{
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.selectedStartingDate:
-                    final Calendar cal = Calendar.getInstance();
-                    int year = cal.get(Calendar.YEAR);
-                    int month = cal.get(Calendar.MONTH);
-                    int date = cal.get(Calendar.DATE);
-
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker datePicker, int nYear, int nMonth, int nDate) {
-
-                            Calendar calendar = new GregorianCalendar(nYear, nMonth, nDate);
-                            sharedPreference.saveData(context, "StartingDate",
-                                    df.format(calendar.getTime()));
-
-                            me.setStartService(calendar.getTime());
-
-                            startingDateTv.setText(sharedPreference.loadStringData(context, "StartingDate"));
-
-                            sharedPreference.saveData(context, "EndingDate",
-                                    df.format(calculateFreedom(me.getMilitaryType(), me.getStartService())));
-
-                            me.setEndService(calculateFreedom(me.getMilitaryType(), me.getStartService()));
-
-                            endingDateTv.setText(sharedPreference.loadStringData(context, "EndingDate"));
-
-                        }
-                    }, year, month, date);
-                    datePickerDialog.show();
-                    break;
+//                case R.id.selectedStartingDate:
+//                    final Calendar cal = Calendar.getInstance();
+//                    int year = cal.get(Calendar.YEAR);
+//                    int month = cal.get(Calendar.MONTH);
+//                    int date = cal.get(Calendar.DATE);
+//
+//                    DatePickerDialog datePickerDialog = new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+//                        @Override
+//                        public void onDateSet(DatePicker datePicker, int nYear, int nMonth, int nDate) {
+//
+//                            Calendar calendar = new GregorianCalendar(nYear, nMonth, nDate);
+//                            sharedPreference.saveData(context, "StartingDate",
+//                                    df.format(calendar.getTime()));
+//
+//                            me.setStartService(calendar.getTime());
+//
+//                            startingDateTv.setText(sharedPreference.loadStringData(context, "StartingDate"));
+//
+//                            sharedPreference.saveData(context, "EndingDate",
+//                                    df.format(calculateFreedom(me.getMilitaryType(), me.getStartService())));
+//
+//                            me.setEndService(calculateFreedom(me.getMilitaryType(), me.getStartService()));
+//
+//                            endingDateTv.setText(sharedPreference.loadStringData(context, "EndingDate"));
+//
+//                        }
+//                    }, year, month, date);
+//                    datePickerDialog.show();
+//                    break;
 
                 case R.id.btnEditProfile:
                     redirectEditProfileActivity();
@@ -311,8 +319,15 @@ public class ProfileActivity extends AppCompatActivity{
         sharedPreference.saveData(context, "MilitaryType", type.getEName());
         me.setMilitaryType(type);
         militaryNameTv.setText(me.getMilitaryType().getKName());
-        sharedPreference.saveData(context, "EndingDate", df.format(calculateFreedom(me.getMilitaryType(), me.getStartService())));
-        me.setEndService(calculateFreedom(me.getMilitaryType(), me.getStartService()));
+        if (sharedPreference.loadStringData(context, "PersonalLeaveDays").equals("")){
+            sharedPreference.saveData(context, "PersonalLeaveDays", "0");
+        }
+        int personalLeaveDays = Integer.parseInt(sharedPreference.loadStringData(context, "PersonalLeaveDays"));
+        Calendar endDateCal = Calendar.getInstance();
+        endDateCal.setTime(calculateFreedom(me.getMilitaryType(), me.getStartService()));
+        endDateCal.add(Calendar.DATE, personalLeaveDays);
+        sharedPreference.saveData(context, "EndingDate", df.format(endDateCal.getTime()));
+        me.setEndService(endDateCal.getTime());
 
         endingDateTv.setText(sharedPreference.loadStringData(context, "EndingDate"));
 
