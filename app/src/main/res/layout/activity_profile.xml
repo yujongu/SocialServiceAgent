@@ -77,6 +77,7 @@
             android:layout_height = "wrap_content"
             android:layout_marginStart="4dp"
             android:text="Add Friend"
+            android:id="@+id/btnAddFriend"
             />
 
     </LinearLayout>
@@ -92,15 +93,8 @@
         >
 
         <TableRow>
-            <Spinner
-                android:layout_marginStart="-8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/militarySpinner"
-                android:entries="@array/Military_Types"
-                />
-
             <TextView
+                android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/TvMilitaryName"

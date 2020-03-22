@@ -1,5 +1,6 @@
 package com.yujongu.socialserviceagent;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -14,7 +15,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -23,11 +29,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends AppCompatActivity {
 
+    final static String TAG = "EditProfileActivityT";
     Activity context = EditProfileActivity.this;
 
     private ProfileInfo me;
@@ -238,5 +246,22 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void updateUserToCloud(String documentName, Map<String, Object> mapObj){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(documentName).set(mapObj, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Successfully saved to cloud", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed to save to cloud", Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 }

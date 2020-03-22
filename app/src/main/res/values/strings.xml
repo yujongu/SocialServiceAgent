@@ -3,6 +3,7 @@
     <string name = "kakao_app_key">07125de3b44bea5ded817295bd683ee7</string>
     <string name = "monthDateText">%d월 %d일</string>
     <string name = "yearMonthText">%d년 %d월</string>
+    <string name = "dateText">%d일</string>
 
     <string-array name = "Military_Types">
         <item>Army</item>

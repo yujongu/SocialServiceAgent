@@ -8,9 +8,8 @@
     android:padding="10dp">
 
     <TableLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:stretchColumns="*">
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content">
         <TableRow>
             <TextView
                 android:textAlignment="center"
@@ -19,7 +18,7 @@
                 android:layout_height = "wrap_content"
                 android:id="@+id/popupTvDate"
                 android:contentDescription="selected date"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 />
         </TableRow>
         <TableRow>
@@ -56,7 +55,7 @@
                 android:layout_height = "wrap_content"
                 android:entries="@array/Time_Schedule"
                 android:id="@+id/popupSpinStartTime"
-                android:padding="10dp"
+                android:padding="16dp"
                 android:textAlignment="center"
                 />
 
@@ -74,7 +73,7 @@
                 android:layout_height = "wrap_content"
                 android:entries="@array/Time_Schedule"
                 android:id="@+id/popupSpinEndTime"
-                android:padding="10dp"
+                android:padding="16dp"
                 android:textAlignment="center"/>
         </TableRow>
 

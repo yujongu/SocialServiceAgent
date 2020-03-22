@@ -1,17 +1,18 @@
 package com.yujongu.socialserviceagent.KakaoLogin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -19,39 +20,47 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.util.exception.KakaoException;
-import com.kakao.util.helper.Utility;
 import com.kakao.util.helper.log.Logger;
 import com.yujongu.socialserviceagent.MainActivity;
 import com.yujongu.socialserviceagent.R;
 import com.yujongu.socialserviceagent.SharedPreference;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import static com.kakao.util.helper.Utility.getPackageInfo;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private Context context = LoginActivity.this;
 
     private SessionCallback callback;
 
     private SharedPreference sharedPreference;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
 
     final static String TAG = "LoginActivityT";
+    final static String KEY_ID = "UserId";
+    final static String KEY_NAME = "Name";
+    final static String KEY_IMAGE = "Image URL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
 
-        callback = new SessionCallback();
+
         sharedPreference = new SharedPreference();
 //        Log.i("key hash", Utility.getKeyHash(this));
 
-        Session.getCurrentSession().addCallback(callback);
-        Session.getCurrentSession().checkAndImplicitOpen();
+        if (sharedPreference.loadStringData(context, "UserId") != null){
+            redirectMainActivity();
+        } else {
+            callback = new SessionCallback();
+            Session.getCurrentSession().addCallback(callback);
+            Session.getCurrentSession().checkAndImplicitOpen();
+        }
     }
 
     @Override
@@ -102,27 +111,51 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(MeV2Response response) {
+                final String userId = response.getId() + "";
                 final String nickname = response.getKakaoAccount().getProfile().getNickname() == null ?
                         "" : response.getKakaoAccount().getProfile().getNickname();
                 final String url = response.getKakaoAccount().getProfile().getProfileImageUrl() == null ?
                         "" : response.getKakaoAccount().getProfile().getProfileImageUrl();
 
-                sharedPreference.saveData(LoginActivity.this, "ProfileName", nickname);
-                sharedPreference.saveData(LoginActivity.this, "ProfilePicUrl", url);
+                sharedPreference.saveData(context, "UserId", userId);
+                sharedPreference.saveData(context, "ProfileName", nickname);
+                sharedPreference.saveData(context, "ProfilePicUrl", url);
+
+                Map<String, Object> user = new HashMap<>();
+                user.put(KEY_ID, userId);
+                user.put(KEY_NAME, nickname);
+                user.put(KEY_IMAGE, url);
+//                saveUserToCloud(String.valueOf(response.getId()), user);
+
                 redirectMainActivity();
             }
         });
+    }
 
+    private void saveUserToCloud(String documentName, Map<String, Object> mapObj){
+        db.collection("User").document(documentName).set(mapObj, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Fail", Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 
     private void redirectMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     protected void redirectLoginActivity() {
-        final Intent intent = new Intent(this, LoginActivity.class);
+        final Intent intent = new Intent(context, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
         finish();

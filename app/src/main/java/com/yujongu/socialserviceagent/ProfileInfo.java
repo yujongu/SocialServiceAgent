@@ -8,6 +8,7 @@ public class ProfileInfo {
     private MilitaryTypeEnum militaryType;
     private Date startService;
     private Date endService;
+    private int personalLeaveDays;
 
     ProfileInfo(String name, String pictureUrl) {
         this.name = name;
@@ -15,6 +16,15 @@ public class ProfileInfo {
         this.militaryType = MilitaryTypeEnum.ARMY;
         this.startService = new Date();
         this.endService = new Date();
+        this.personalLeaveDays = 0;
+    }
+
+    public int getPersonalLeaveDays() {
+        return personalLeaveDays;
+    }
+
+    public void setPersonalLeaveDays(int personalLeaveDays) {
+        this.personalLeaveDays = personalLeaveDays;
     }
 
     public Date getStartService() {

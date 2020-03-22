@@ -1,7 +1,6 @@
 package com.yujongu.socialserviceagent;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,13 +8,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -26,15 +30,30 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity{
+    final static String TAG = "ProfileActivityT";
+    final static String KEY_STARTDATE = "StartDate";
+    final static String KEY_ENDDATE = "EndDate";
+    final static String KEY_MTYPE = "MType";
+
+    final static String SP_PNAME = "ProfileName";
+    final static String SP_PIMAGE = "ProfilePicUrl";
+    final static String SP_STARTDATE = "StartingDate";
+    final static String SP_ENDDATE = "EndingDate";
+    final static String SP_MTYPE = "MilitaryType";
+    final static String SP_PERSONLEAVEDAYS = "PersonalLeaveDays";
 
     //todo set multiple friend profiles to view
     Activity context = ProfileActivity.this;
+
+    Map<String, Object> user;
 
     private ProfileInfo me;
 
@@ -42,17 +61,18 @@ public class ProfileActivity extends AppCompatActivity{
     private ProgressBar pbProgress;
     private CircleImageView profileIv;
     private TextView profileNameTv;
-    private Spinner mTypeSpinner;
     private TextView militaryNameTv;
     private TextView startingDateTv, endingDateTv;
     private TextView totalDaysTv;
     private TextView discountDaysTv;
     private TextView personalLeaveTv;
     private Button editProfileBtn;
+    private Button addFriendBtn;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
     private SharedPreference sharedPreference;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +84,9 @@ public class ProfileActivity extends AppCompatActivity{
 
     }
 
-
-
     private void initInstances(){
         sharedPreference = new SharedPreference();
+        db = FirebaseFirestore.getInstance();
 
         pbProgress = findViewById(R.id.timeLeftPb);
         progressTv = findViewById(R.id.tvProgress);
@@ -75,36 +94,25 @@ public class ProfileActivity extends AppCompatActivity{
         profileIv = findViewById(R.id.profile_image);
         profileNameTv = findViewById(R.id.profile_name);
 
-        setProfileInfo();
 
         editProfileBtn = findViewById(R.id.btnEditProfile);
+        addFriendBtn = findViewById(R.id.btnAddFriend);
 
-        mTypeSpinner = findViewById(R.id.militarySpinner);
-
-        if (sharedPreference.loadStringData(context, "MilitaryType") != null){
-            mTypeSpinner.setSelection(getMilitaryEnum(sharedPreference.loadStringData(context, "MilitaryType")).getPosition());
-        }
 
         militaryNameTv = findViewById(R.id.TvMilitaryName);
 
         startingDateTv = findViewById(R.id.selectedStartingDate);
-        startingDateTv.setText(df.format(me.getStartService()));
 
         endingDateTv = findViewById(R.id.TvEndingDate);
 
         totalDaysTv = findViewById(R.id.TvTotalDays);
         discountDaysTv = findViewById(R.id.TvDiscountDays);
         personalLeaveTv = findViewById(R.id.TvPersonalLeave);
-        if (sharedPreference.loadStringData(context, "PersonalLeaveDays") != null){
-            personalLeaveTv.setText(sharedPreference.loadStringData(context, "PersonalLeaveDays"));
-        } else {
-            sharedPreference.saveData(context, "PersonalLeaveDays", String.valueOf(0));
-        }
+
+        setProfileInfo();
     }
 
     private void eventListeners(){
-        mTypeSpinner.setOnItemSelectedListener(avSelectedListener);
-
         startingDateTv.setOnClickListener(listener);
         editProfileBtn.setOnClickListener(listener);
     }
@@ -112,17 +120,14 @@ public class ProfileActivity extends AppCompatActivity{
     private void setProfileInfo(){
         //fetch info from sharedPreference and save to me.
         me = new ProfileInfo(
-                sharedPreference.loadStringData(context, "ProfileName"),
-                sharedPreference.loadStringData(context, "ProfilePicUrl")
+                sharedPreference.loadStringData(context, SP_PNAME),
+                sharedPreference.loadStringData(context, SP_PIMAGE)
         );
 
-        try {
-            if (sharedPreference.loadStringData(context, "StartingDate") != null){
-                me.setStartService(df.parse(sharedPreference.loadStringData(context, "StartingDate")));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        boolean freshUser = true;
+
+        //profileName
+        profileNameTv.setText(me.getName());
 
         //profileImage
         if (me.getPictureUrl().equals("")){
@@ -133,12 +138,42 @@ public class ProfileActivity extends AppCompatActivity{
                     .into(profileIv);
         }
 
-        //profileName
-        profileNameTv.setText(me.getName());
+        //mType
+        if (sharedPreference.loadStringData(context, SP_MTYPE) == null){
+            sharedPreference.saveData(context, SP_MTYPE, me.getMilitaryType().getEName());
+        } else {
+            me.setMilitaryType(getMilitaryEnum(sharedPreference.loadStringData(context, SP_MTYPE)));
+        }
+        militaryNameTv.setText(me.getMilitaryType().getKName());
 
+        //personalLeaveDate
+        if (sharedPreference.loadStringData(context, SP_PERSONLEAVEDAYS) == null){
+            sharedPreference.saveData(context, SP_PERSONLEAVEDAYS, String.valueOf(me.getPersonalLeaveDays()));
+        } else {
+            me.setPersonalLeaveDays(Integer.parseInt(sharedPreference.loadStringData(context, SP_PERSONLEAVEDAYS)));
+        }
+        personalLeaveTv.setText(getString(R.string.dateText, me.getPersonalLeaveDays()));
+
+        //start and end date
+        if (sharedPreference.loadStringData(context, SP_STARTDATE) == null){
+            sharedPreference.saveData(context, SP_STARTDATE, df.format(me.getStartService()));
+        } else {
+            try {
+                me.setStartService(df.parse(sharedPreference.loadStringData(context, SP_STARTDATE)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        me.setEndService(getEndDate(
+                me.getMilitaryType(), me.getStartService(), me.getPersonalLeaveDays()));
+        sharedPreference.saveData(context,SP_ENDDATE, df.format(me.getEndService()));
+
+        startingDateTv.setText(df.format(me.getStartService()));
+        endingDateTv.setText(df.format(me.getEndService()));
     }
 
-    private Date calculateFreedom(MilitaryTypeEnum militaryTypeEnum, Date startDate){
+
+    private Date calculateServiceLength(MilitaryTypeEnum militaryTypeEnum, Date startDate){
         Date firstDate = new GregorianCalendar(2018, 9, 1).getTime(); //2018/10/1
 
         Calendar calendar = Calendar.getInstance();
@@ -213,84 +248,16 @@ public class ProfileActivity extends AppCompatActivity{
         }
     }
 
-
-    AdapterView.OnItemSelectedListener avSelectedListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            switch (adapterView.getItemAtPosition(i).toString()){
-                case "Army":
-                    getEndDate(MilitaryTypeEnum.ARMY);
-                    break;
-
-                case "Marine":
-                    getEndDate(MilitaryTypeEnum.MARINE);
-                    break;
-
-                case "Navy":
-                    getEndDate(MilitaryTypeEnum.NAVY);
-                    break;
-
-                case "Airforce":
-                    getEndDate(MilitaryTypeEnum.AIRFORCE);
-                    break;
-
-                case "Police":
-                    getEndDate(MilitaryTypeEnum.POLICE);
-                    break;
-
-                case "Fire":
-                    getEndDate(MilitaryTypeEnum.FIRE);
-                    break;
-
-                case "SSA":
-                default:
-                    getEndDate(MilitaryTypeEnum.SSA);
-                    break;
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-
-        }
-    };
-
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-//                case R.id.selectedStartingDate:
-//                    final Calendar cal = Calendar.getInstance();
-//                    int year = cal.get(Calendar.YEAR);
-//                    int month = cal.get(Calendar.MONTH);
-//                    int date = cal.get(Calendar.DATE);
-//
-//                    DatePickerDialog datePickerDialog = new DatePickerDialog(ProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
-//                        @Override
-//                        public void onDateSet(DatePicker datePicker, int nYear, int nMonth, int nDate) {
-//
-//                            Calendar calendar = new GregorianCalendar(nYear, nMonth, nDate);
-//                            sharedPreference.saveData(context, "StartingDate",
-//                                    df.format(calendar.getTime()));
-//
-//                            me.setStartService(calendar.getTime());
-//
-//                            startingDateTv.setText(sharedPreference.loadStringData(context, "StartingDate"));
-//
-//                            sharedPreference.saveData(context, "EndingDate",
-//                                    df.format(calculateFreedom(me.getMilitaryType(), me.getStartService())));
-//
-//                            me.setEndService(calculateFreedom(me.getMilitaryType(), me.getStartService()));
-//
-//                            endingDateTv.setText(sharedPreference.loadStringData(context, "EndingDate"));
-//
-//                        }
-//                    }, year, month, date);
-//                    datePickerDialog.show();
-//                    break;
-
                 case R.id.btnEditProfile:
                     redirectEditProfileActivity();
+                    break;
+
+                case R.id.btnAddFriend:
+
                     break;
             }
         }
@@ -315,21 +282,10 @@ public class ProfileActivity extends AppCompatActivity{
         redirectMainActivity();
     }
 
-    public void getEndDate(MilitaryTypeEnum type){
-        sharedPreference.saveData(context, "MilitaryType", type.getEName());
-        me.setMilitaryType(type);
-        militaryNameTv.setText(me.getMilitaryType().getKName());
-        if (sharedPreference.loadStringData(context, "PersonalLeaveDays").equals("")){
-            sharedPreference.saveData(context, "PersonalLeaveDays", "0");
-        }
-        int personalLeaveDays = Integer.parseInt(sharedPreference.loadStringData(context, "PersonalLeaveDays"));
+    public Date getEndDate(MilitaryTypeEnum mType, Date startDate, int personalLeaveDays){
         Calendar endDateCal = Calendar.getInstance();
-        endDateCal.setTime(calculateFreedom(me.getMilitaryType(), me.getStartService()));
+        endDateCal.setTime(calculateServiceLength(mType, startDate));
         endDateCal.add(Calendar.DATE, personalLeaveDays);
-        sharedPreference.saveData(context, "EndingDate", df.format(endDateCal.getTime()));
-        me.setEndService(endDateCal.getTime());
-
-        endingDateTv.setText(sharedPreference.loadStringData(context, "EndingDate"));
 
         final Handler h = new Handler();
         h.post(new Runnable() {
@@ -341,7 +297,9 @@ public class ProfileActivity extends AppCompatActivity{
                 h.postDelayed(this, 1000);
             }
         });
+        return endDateCal.getTime();
     }
+
 
     private void redirectMainActivity(){
         Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
