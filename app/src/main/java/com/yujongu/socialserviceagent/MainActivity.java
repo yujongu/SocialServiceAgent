@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-
                     mCalendarAdapter.setCalendarList(mCalendarData);
                     break;
 

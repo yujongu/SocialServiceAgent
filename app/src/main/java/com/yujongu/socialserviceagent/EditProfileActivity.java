@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText ep_personalLeaveTv;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,10 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     };
 
+    final static String MTYPE = "Military Type";
+    final static String SDATE = "Start Date";
+    final static String EDATE = "End Date";
+
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -149,6 +155,11 @@ public class EditProfileActivity extends AppCompatActivity {
                         ep_personalLeaveTv.setText("0");
                     }
                     sharedPreference.saveData(context, "PersonalLeaveDays", ep_personalLeaveTv.getText().toString());
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put(MTYPE, mTypeSpinner.getSelectedItem().toString());
+                    user.put(SDATE, ep_startingDateTv.getText().toString());
+                    updateUserToCloud(sharedPreference.loadStringData(context, "UserId"), user);
                     redirectProfileActivity();
                     break;
 
@@ -250,7 +261,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void updateUserToCloud(String documentName, Map<String, Object> mapObj){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("User").document(documentName).set(mapObj, SetOptions.merge())
+        db.collection("Users").document(documentName).set(mapObj, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -264,4 +275,5 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -54,13 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreference = new SharedPreference();
 //        Log.i("key hash", Utility.getKeyHash(this));
 
-        if (sharedPreference.loadStringData(context, "UserId") != null){
-            redirectMainActivity();
-        } else {
-            callback = new SessionCallback();
-            Session.getCurrentSession().addCallback(callback);
-            Session.getCurrentSession().checkAndImplicitOpen();
-        }
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        Session.getCurrentSession().checkAndImplicitOpen();
     }
 
     @Override
@@ -117,23 +113,25 @@ public class LoginActivity extends AppCompatActivity {
                 final String url = response.getKakaoAccount().getProfile().getProfileImageUrl() == null ?
                         "" : response.getKakaoAccount().getProfile().getProfileImageUrl();
 
-                sharedPreference.saveData(context, "UserId", userId);
-                sharedPreference.saveData(context, "ProfileName", nickname);
-                sharedPreference.saveData(context, "ProfilePicUrl", url);
-
                 Map<String, Object> user = new HashMap<>();
                 user.put(KEY_ID, userId);
                 user.put(KEY_NAME, nickname);
                 user.put(KEY_IMAGE, url);
-//                saveUserToCloud(String.valueOf(response.getId()), user);
 
+                if (sharedPreference.loadStringData(context, "UserId") == null){
+                    saveUserToCloud(String.valueOf(response.getId()), user);
+                }
+
+                sharedPreference.saveData(context, "UserId", userId);
+                sharedPreference.saveData(context, "ProfileName", nickname);
+                sharedPreference.saveData(context, "ProfilePicUrl", url);
                 redirectMainActivity();
             }
         });
     }
 
     private void saveUserToCloud(String documentName, Map<String, Object> mapObj){
-        db.collection("User").document(documentName).set(mapObj, SetOptions.merge())
+        db.collection("Users").document(documentName).set(mapObj, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

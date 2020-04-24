@@ -90,21 +90,13 @@ public class ProfileActivity extends AppCompatActivity{
 
         pbProgress = findViewById(R.id.timeLeftPb);
         progressTv = findViewById(R.id.tvProgress);
-
         profileIv = findViewById(R.id.profile_image);
         profileNameTv = findViewById(R.id.profile_name);
-
-
         editProfileBtn = findViewById(R.id.btnEditProfile);
         addFriendBtn = findViewById(R.id.btnAddFriend);
-
-
         militaryNameTv = findViewById(R.id.TvMilitaryName);
-
         startingDateTv = findViewById(R.id.selectedStartingDate);
-
         endingDateTv = findViewById(R.id.TvEndingDate);
-
         totalDaysTv = findViewById(R.id.TvTotalDays);
         discountDaysTv = findViewById(R.id.TvDiscountDays);
         personalLeaveTv = findViewById(R.id.TvPersonalLeave);
