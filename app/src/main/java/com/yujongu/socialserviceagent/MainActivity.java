@@ -1,8 +1,10 @@
 package com.yujongu.socialserviceagent;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +14,27 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,13 +42,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     static final int PAID = 0;
     static final int SICK = 1;
     static final int PERSONAL = 2;
+    static final String PAIDLEAVE = "연차";
+    static final String SICKLEAVE = "병가";
+    static final String PERSONALLEAVE = "복무중지";
 
+    private Context context;
+    private SharedPreference sharedPreference;
+
+    private String TAG = "MainActivityT";
     private ImageButton profileBtn;
 
     private ImageButton prevMonthBtn;
@@ -45,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Calendar calendar;
     private CalendarAdapter mCalendarAdapter;
+    private int dateSelectedIndex = -1;
     private ArrayList<Day_Event> mCalendarData;
 
     private ImageButton addEventBtn;
@@ -64,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initInstances(){
+        context = this;
+        sharedPreference = new SharedPreference();
         prevMonthBtn = findViewById(R.id.btnPrevMonth);
         nextMonthBtn = findViewById(R.id.btnNextMonth);
         currMonthTv = findViewById(R.id.tvCurrMonth);
@@ -86,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < mCalendarData.size(); i++){
             if (mCalendarData.get(i).getDate() == today){
                 mCalendarData.get(i).setClicked(true);
+                dateSelectedIndex = i;
             }
         }
         mCalendarAdapter = new CalendarAdapter(this, mCalendarData);
@@ -126,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 continue;
             }
             day = new Day_Event(0);
+            day.setYear(calendar.get(Calendar.YEAR));
             day.setMonth(calendar.get(Calendar.MONTH) + 1);
             day.setDate(i - (calendar.get(Calendar.DAY_OF_WEEK) - 1) + 1);
             mCalendarData.add(day);
@@ -136,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < mCalendarData.size(); i++){
                 if (mCalendarData.get(i).getDate() == todayCal.get(Calendar.DATE)){
                     mCalendarData.get(i).setClicked(true);
+                    dateSelectedIndex = i;
                 }
             }
         }
@@ -158,17 +190,19 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < mCalendarData.size(); i++){
                         if (mCalendarData.get(i).isClicked()){
                             checkClicked = true;
+                            dateSelectedIndex = i;
+                            break;
                         }
                     }
                     if (!checkClicked){
                         for (int i = 0; i < mCalendarData.size(); i++){
                             if (mCalendarData.get(i).getDate() == 1){
                                 mCalendarData.get(i).setClicked(true);
+                                dateSelectedIndex = i;
                                 break;
                             }
                         }
                     }
-
 
                     mCalendarAdapter.setCalendarList(mCalendarData);
                     break;
@@ -181,12 +215,15 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < mCalendarData.size(); i++){
                         if (mCalendarData.get(i).isClicked()){
                             checkClicked = true;
+                            dateSelectedIndex = i;
+                            break;
                         }
                     }
                     if (!checkClicked){
                         for (int i = 0; i < mCalendarData.size(); i++){
                             if (mCalendarData.get(i).getDate() == 1){
                                 mCalendarData.get(i).setClicked(true);
+                                dateSelectedIndex = i;
                                 break;
                             }
                         }
@@ -203,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < mCalendarData.size(); i++){
                         if (mCalendarData.get(i).getDate() == date){
                             mCalendarData.get(i).setClicked(true);
+                            dateSelectedIndex = i;
+                            break;
                         }
                     }
                     mCalendarAdapter.setCalendarList(mCalendarData);
@@ -233,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
     private Date convertToDate(String text){
 
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("k:mm");
+        SimpleDateFormat format = new SimpleDateFormat("M d yyyy k:mm");
         try {
             date = format.parse(text);
         } catch (ParseException e) {
@@ -243,6 +282,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showPopupWindow(final View view, final int type){
+        dateSelectedIndex = mCalendarAdapter.selectedDateIndex;
+
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_window_leave, null);
 
@@ -256,19 +297,39 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener avSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Pair<Date, Date> leave;
+                Date startTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupStartTimeSpinner.getSelectedItem().toString());
+                Date endTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupEndTimeSpinner.getSelectedItem().toString());
                 switch (adapterView.getId()){
                     case R.id.popupSpinStartTime:
-                        if (convertToDate(popupStartTimeSpinner.getItemAtPosition(i).toString()).after
-                                (convertToDate(popupEndTimeSpinner.getSelectedItem().toString()))){
+                        //prevent start time to be after end time;
+                        if (startTime.after(endTime)){
                             popupEndTimeSpinner.setSelection(i);
+                            endTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupEndTimeSpinner.getSelectedItem().toString());
                         }
+                        leave = new Pair<>(startTime, endTime);
+                        if (type == PAID){
+                            mCalendarData.get(dateSelectedIndex).setPaidLeave(leave);
+                        } else if (type == SICK){
+                            mCalendarData.get(dateSelectedIndex).setSickLeave(leave);
+                        }
+
                         break;
 
                     case R.id.popupSpinEndTime:
-                        if (convertToDate(popupStartTimeSpinner.getSelectedItem().toString()).after
-                                (convertToDate(popupEndTimeSpinner.getItemAtPosition(i).toString()))){
+                        //prevent start time to be after end time;
+                        if (startTime.after(endTime)){
                             popupStartTimeSpinner.setSelection(i);
+                            startTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupStartTimeSpinner.getSelectedItem().toString());
+
                         }
+                        leave = new Pair<>(startTime, endTime);
+                        if (type == PAID){
+                            mCalendarData.get(dateSelectedIndex).setPaidLeave(leave);
+                        } else if (type == SICK){
+                            mCalendarData.get(dateSelectedIndex).setSickLeave(leave);
+                        }
+
                         break;
                 }
             }
@@ -283,12 +344,7 @@ public class MainActivity extends AppCompatActivity {
         popupEndTimeSpinner.setOnItemSelectedListener(avSelectedListener);
 
 
-        for (int i = 0; i < mCalendarData.size(); i++){
-            if (mCalendarData.get(i).isClicked()){
-                popupDateTv.setText(
-                        String.format(getString(R.string.monthDateText), mCalendarData.get(i).getMonth(), mCalendarData.get(i).getDate()));
-            }
-        }
+        popupDateTv.setText(String.format(getString(R.string.monthDateText), mCalendarData.get(dateSelectedIndex).getMonth(), mCalendarData.get(dateSelectedIndex).getDate()));
 
         switch (type){
             case PAID:
@@ -329,11 +385,66 @@ public class MainActivity extends AppCompatActivity {
         if (startTime.equals(endTime)){
             Toast.makeText(this, "시작 시간과 끝나는 시간이 같습니다.\n저장되지 않았습니다.", Toast.LENGTH_SHORT).show();
             Log.i("Canceled", "Did not save");
+
+            if (eventType == PAID){
+                mCalendarData.get(dateSelectedIndex).setPaidLeave(null);
+            } else if (eventType == SICK){
+                mCalendarData.get(dateSelectedIndex).setSickLeave(null);
+            }
+
         } else {
             Log.i("Type", String.valueOf(eventType));
             Log.i("Start time", startTime);
             Log.i("End time", endTime);
+            if (eventType == PAID){
+                updateLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), PAIDLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+                DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
+                myInfoRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isComplete()){
+                            DocumentSnapshot doc = task.getResult();
+                            if (doc != null){
+                                Log.i("TESTTTT+++++++++++", doc.get(PAIDLEAVE).toString());
+
+                            } else {
+                                Log.d(TAG, "No Document Found");
+                            }
+
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
+            } else if (eventType == SICK){
+                updateLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), SICKLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
+
+            }
+
         }
+    }
+
+    private void updateLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference myInfoRef = db.collection("Users").document(documentName);
+        myInfoRef.update(field, FieldValue.arrayUnion(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 
     private void triggerBtnVisible(){

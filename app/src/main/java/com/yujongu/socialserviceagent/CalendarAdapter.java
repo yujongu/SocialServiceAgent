@@ -18,9 +18,17 @@ public class CalendarAdapter extends RecyclerView.Adapter {
 
     private Context context;
 
+    public int selectedDateIndex = -1;
+
     public CalendarAdapter(Context context, ArrayList<Day_Event> calendarList) {
         this.context = context;
         this.mCalList = calendarList;
+
+        for (int i = 0; i < calendarList.size(); i++){
+            if (calendarList.get(i).isClicked() == true){
+                selectedDateIndex = i;
+            }
+        }
 
     }
 
@@ -103,6 +111,7 @@ public class CalendarAdapter extends RecyclerView.Adapter {
                                 }
                             }
                             mCalList.get(getAdapterPosition()).setClicked(true);
+                            selectedDateIndex = getAdapterPosition();
                         }
                     }
                     notifyDataSetChanged();
