@@ -20,13 +20,14 @@
 
 
 
-<!--    <ImageView-->
-<!--        android:layout_width = "wrap_content"-->
-<!--        android:layout_height = "wrap_content"-->
-<!--        android:background="@drawable/circle"-->
-<!--        android:layout_marginStart="6dp"-->
-<!--        android:layout_marginBottom="6dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:visibility="gone"/>-->
+    <ImageView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:background="@drawable/circle"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ivPaidLeave"
+        android:visibility="gone"/>
 
 </RelativeLayout>

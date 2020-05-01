@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,14 +27,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +40,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private SharedPreference sharedPreference;
+    private FirebaseFirestore db;
+
 
     private String TAG = "MainActivityT";
     private ImageButton profileBtn;
@@ -82,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton cBtn;
     private ImageButton uBtn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void initInstances(){
         context = this;
         sharedPreference = new SharedPreference();
+        db = FirebaseFirestore.getInstance();
         prevMonthBtn = findViewById(R.id.btnPrevMonth);
         nextMonthBtn = findViewById(R.id.btnNextMonth);
         currMonthTv = findViewById(R.id.tvCurrMonth);
@@ -113,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         int today = calendar.get(Calendar.DATE);
         calendar.set(Calendar.DATE, 1);
         setMCalendarData(calendar);
-
         for (int i = 0; i < mCalendarData.size(); i++){
             if (mCalendarData.get(i).getDate() == today){
                 mCalendarData.get(i).setClicked(true);
@@ -122,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         }
         mCalendarAdapter = new CalendarAdapter(this, mCalendarData);
         mRecyclerView.setAdapter(mCalendarAdapter);
+
 
         lBtn = findViewById(R.id.btnL);
         cBtn = findViewById(R.id.btnC);
@@ -146,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private void setMCalendarData(Calendar calendar){
         currMonthTv.setText(String.format(getString(R.string.yearMonthText), calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1));
         mCalendarData = new ArrayList<>();
+
         //6 rows 7 cols
         for (int i = 0; i < 42; i++){
             Day_Event day;
@@ -160,7 +157,10 @@ public class MainActivity extends AppCompatActivity {
             day = new Day_Event(0);
             day.setYear(calendar.get(Calendar.YEAR));
             day.setMonth(calendar.get(Calendar.MONTH) + 1);
-            day.setDate(i - (calendar.get(Calendar.DAY_OF_WEEK) - 1) + 1);
+            int date = i - (calendar.get(Calendar.DAY_OF_WEEK) - 1) + 1;
+            day.setDate(date);
+
+
             mCalendarData.add(day);
         }
 
@@ -173,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        retrieveData();
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -283,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
         return date;
     }
 
+    private Pair<Date, Date> leave;
     private void showPopupWindow(final View view, final int type){
         dateSelectedIndex = mCalendarAdapter.selectedDateIndex;
 
@@ -299,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.OnItemSelectedListener avSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Pair<Date, Date> leave;
                 Date startTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupStartTimeSpinner.getSelectedItem().toString());
                 Date endTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupEndTimeSpinner.getSelectedItem().toString());
                 switch (adapterView.getId()){
@@ -310,12 +312,6 @@ public class MainActivity extends AppCompatActivity {
                             endTime = convertToDate(mCalendarData.get(dateSelectedIndex).getMonth() + " " + mCalendarData.get(dateSelectedIndex).getDate() + " " + mCalendarData.get(dateSelectedIndex).getYear() + " " + popupEndTimeSpinner.getSelectedItem().toString());
                         }
                         leave = new Pair<>(startTime, endTime);
-                        if (type == PAID){
-                            mCalendarData.get(dateSelectedIndex).setPaidLeave(leave);
-                        } else if (type == SICK){
-                            mCalendarData.get(dateSelectedIndex).setSickLeave(leave);
-                        }
-
                         break;
 
                     case R.id.popupSpinEndTime:
@@ -326,12 +322,6 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                         leave = new Pair<>(startTime, endTime);
-                        if (type == PAID){
-                            mCalendarData.get(dateSelectedIndex).setPaidLeave(leave);
-                        } else if (type == SICK){
-                            mCalendarData.get(dateSelectedIndex).setSickLeave(leave);
-                        }
-
                         break;
                 }
             }
@@ -387,31 +377,28 @@ public class MainActivity extends AppCompatActivity {
         if (startTime.equals(endTime)){
             Toast.makeText(this, "시작 시간과 끝나는 시간이 같습니다.\n저장되지 않았습니다.", Toast.LENGTH_SHORT).show();
             Log.i("Canceled", "Did not save");
-
-            if (eventType == PAID){
-                mCalendarData.get(dateSelectedIndex).setPaidLeave(null);
-            } else if (eventType == SICK){
-                mCalendarData.get(dateSelectedIndex).setSickLeave(null);
-            }
-
         } else {
             Log.i("Type", String.valueOf(eventType));
             Log.i("Start time", startTime);
             Log.i("End time", endTime);
+
             if (eventType == PAID){
-                updateLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), PAIDLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
-
+                if (mCalendarData.get(dateSelectedIndex).getPaidLeave() != null){
+                    removeLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), PAIDLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
+                }
+                mCalendarData.get(dateSelectedIndex).setPaidLeave(leave);
+                addLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), PAIDLEAVE, leave);
             } else if (eventType == SICK){
-                updateLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), SICKLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
-
+                if (mCalendarData.get(dateSelectedIndex).getSickLeave() != null){
+                    removeLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), SICKLEAVE, mCalendarData.get(dateSelectedIndex).getSickLeave());
+                }
+                mCalendarData.get(dateSelectedIndex).setSickLeave(leave);
+                addLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), SICKLEAVE, leave);
             }
-
         }
     }
 
-
     private void retrieveData(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
         myInfoRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -421,39 +408,50 @@ public class MainActivity extends AppCompatActivity {
                     if (doc != null){
                         List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
                         for (int i = 0; i < pairList.size(); i++){
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(((Timestamp) pairList.get(0).get("first")).toDate());
-
-
+                            Log.i("TEST4", ((Timestamp) pairList.get(i).get("first")).toDate().toString());
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(((Timestamp) pairList.get(i).get("first")).toDate());
+                            int year = cal.get(Calendar.YEAR);
+                            int month = cal.get(Calendar.MONTH) + 1;
+                            int date = cal.get(Calendar.DATE);
+                            Log.i(TAG, year + " " + month + " " + date);
+                            for (Day_Event day : mCalendarData){
+                                if (day.getYear() == year && day.getMonth() == month && day.getDate() == date){
+                                    day.setPaidLeave(new Pair<Date, Date>(((Timestamp) pairList.get(i).get("first")).toDate(), ((Timestamp) pairList.get(i).get("second")).toDate()));
+                                }
+                            }
+                            mCalendarAdapter.notifyDataSetChanged();
                         }
-                        Log.i("TESTTTTT1", String.valueOf(pairList.get(0)));
-//                                Log.i("TESTTTTT2", pairList.get(0).getClass().getName());
-
-                        Log.i("TEST", pairList.getClass().getName());
-                        Log.i("TEST2", pairList.get(0).getClass().getName());
-
-                        Log.i("TEST4", ((Timestamp) pairList.get(0).get("first")).toDate().toString());
-
-
-                        Log.i("TEST4", String.valueOf(calendar.get(Calendar.DATE)));
-
-
-
                     } else {
                         Log.d(TAG, "No Document Found");
                     }
-
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
     }
-
-    private void updateLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //todo what happens when the device is offline?
+    private void addLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){
         DocumentReference myInfoRef = db.collection("Users").document(documentName);
         myInfoRef.update(field, FieldValue.arrayUnion(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
+            }
+        });
+        mCalendarAdapter.notifyDataSetChanged();
+    }
+
+    private void removeLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){
+        DocumentReference myInfoRef = db.collection("Users").document(documentName);
+        myInfoRef.update(field, FieldValue.arrayRemove(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();

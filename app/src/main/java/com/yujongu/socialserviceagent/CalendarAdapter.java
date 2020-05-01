@@ -2,9 +2,11 @@ package com.yujongu.socialserviceagent;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,6 +71,12 @@ public class CalendarAdapter extends RecyclerView.Adapter {
             }
             Day_Event item = mCalList.get(position);
             holder.itemDay.setText(String.valueOf(item.getDate()));
+
+            if (mCalList.get(position).getPaidLeave() != null){
+                holder.pLeaveIv.setVisibility(View.VISIBLE);
+            } else {
+                holder.pLeaveIv.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -85,6 +93,7 @@ public class CalendarAdapter extends RecyclerView.Adapter {
     private class DayViewHolder extends RecyclerView.ViewHolder {// 요일 입 ViewHolder
 
         TextView itemDay;
+        ImageView pLeaveIv;
 
         public DayViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -121,6 +130,7 @@ public class CalendarAdapter extends RecyclerView.Adapter {
 
         public void initView(View v){
             itemDay = v.findViewById(R.id.tvDate);
+            pLeaveIv = v.findViewById(R.id.ivPaidLeave);
         }
     }
 
