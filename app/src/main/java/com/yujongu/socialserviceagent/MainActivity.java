@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,6 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -399,35 +401,53 @@ public class MainActivity extends AppCompatActivity {
             if (eventType == PAID){
                 updateLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), PAIDLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
-                DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
-                myInfoRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isComplete()){
-                            DocumentSnapshot doc = task.getResult();
-                            if (doc != null){
-                                Log.i("TESTTTT+++++++++++", doc.get(PAIDLEAVE).toString());
-
-                            } else {
-                                Log.d(TAG, "No Document Found");
-                            }
-
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-                    }
-                });
-
-
             } else if (eventType == SICK){
                 updateLeaveDataToCloud(sharedPreference.loadStringData(context, "UserId"), SICKLEAVE, mCalendarData.get(dateSelectedIndex).getPaidLeave());
 
             }
 
         }
+    }
+
+
+    private void retrieveData(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
+        myInfoRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isComplete()){
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc != null){
+                        List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
+                        for (int i = 0; i < pairList.size(); i++){
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(((Timestamp) pairList.get(0).get("first")).toDate());
+
+
+                        }
+                        Log.i("TESTTTTT1", String.valueOf(pairList.get(0)));
+//                                Log.i("TESTTTTT2", pairList.get(0).getClass().getName());
+
+                        Log.i("TEST", pairList.getClass().getName());
+                        Log.i("TEST2", pairList.get(0).getClass().getName());
+
+                        Log.i("TEST4", ((Timestamp) pairList.get(0).get("first")).toDate().toString());
+
+
+                        Log.i("TEST4", String.valueOf(calendar.get(Calendar.DATE)));
+
+
+
+                    } else {
+                        Log.d(TAG, "No Document Found");
+                    }
+
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     private void updateLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){

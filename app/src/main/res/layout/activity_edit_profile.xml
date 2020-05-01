@@ -105,11 +105,53 @@
             android:textSize="16sp"
             android:text="사용 연가 시간"/>
 
-        <EditText
+        <LinearLayout
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:textSize="16sp"
-            android:hint="1일 연가 = 8시간"/>
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:id="@+id/ep_EtPaidLeaveD"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:textSize="16sp"
+                android:text="일"/>
+
+            <EditText
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:id="@+id/ep_EtPaidLeaveH"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:textSize="16sp"
+                android:text="시간"/>
+
+            <EditText
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:id="@+id/ep_EtPaidLeaveM"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:textSize="16sp"
+                android:text="분"
+                android:layout_marginEnd="26dp"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width = "wrap_content"
@@ -117,11 +159,14 @@
             android:textSize="16sp"
             android:text="사용 병가 시간"/>
 
+
+
         <EditText
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:textSize="16sp"
-            android:hint="1일 병가 = 8시간"/>
+            android:hint="1일 병가 = 8시간"
+            android:inputType="number"/>
 
         <TextView
             android:layout_width = "wrap_content"
@@ -135,7 +180,7 @@
             android:text="0"
             android:textSize="16sp"
             android:hint="분할복무 일수"
-            android:id="@+id/ep_TvPersonalLeave"
+            android:id="@+id/ep_EtPersonalLeave"
             android:inputType="date"/>
 
 

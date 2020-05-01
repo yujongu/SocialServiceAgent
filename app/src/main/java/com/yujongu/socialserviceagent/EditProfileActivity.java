@@ -27,6 +27,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -52,6 +53,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private Spinner mTypeSpinner;
     private TextView militaryNameTv;
 
+
+    private EditText ep_paidLeaveDTv;
+    private EditText ep_paidLeaveHTv;
+    private EditText ep_paidLeaveMTv;
 
     private EditText ep_personalLeaveTv;
 
@@ -85,7 +90,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
         ep_startingDateTv = findViewById(R.id.epTvStartingDate);
 
-        ep_personalLeaveTv = findViewById(R.id.ep_TvPersonalLeave);
+        ep_paidLeaveDTv = findViewById(R.id.ep_EtPaidLeaveD);
+        ep_paidLeaveHTv = findViewById(R.id.ep_EtPaidLeaveH);
+        ep_paidLeaveMTv = findViewById(R.id.ep_EtPaidLeaveM);
+
+        ep_personalLeaveTv = findViewById(R.id.ep_EtPersonalLeave);
     }
 
     private void eventListeners(){
@@ -139,6 +148,7 @@ public class EditProfileActivity extends AppCompatActivity {
     final static String MTYPE = "Military Type";
     final static String SDATE = "Start Date";
     final static String EDATE = "End Date";
+    final static String PAIDLDAYS = "Paid Leave Hours";
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
@@ -151,6 +161,27 @@ public class EditProfileActivity extends AppCompatActivity {
                 case R.id.btnSave:
                     sharedPreference.saveData(context, "MilitaryType", mTypeSpinner.getSelectedItem().toString());
                     sharedPreference.saveData(context, "StartingDate", ep_startingDateTv.getText().toString());
+
+                    //paid leave time
+                    Calendar leaveTime = Calendar.getInstance();
+                    if (ep_paidLeaveDTv.getText().toString().equals("")){
+                        leaveTime.set(Calendar.DATE, 0);
+                    } else {
+                        leaveTime.set(Calendar.DATE, Integer.parseInt(ep_paidLeaveDTv.getText().toString()));
+                    }
+                    if (ep_paidLeaveHTv.getText().toString().equals("")){
+                        leaveTime.set(Calendar.HOUR, 0);
+                    } else {
+                        leaveTime.set(Calendar.HOUR, Integer.parseInt(ep_paidLeaveHTv.getText().toString()));
+                    }
+                    if (ep_paidLeaveMTv.getText().toString().equals("")){
+                        leaveTime.set(Calendar.MINUTE, 0);
+                    } else {
+                        leaveTime.set(Calendar.MINUTE, Integer.parseInt(ep_paidLeaveMTv.getText().toString()));
+                    }
+                    sharedPreference.saveData(context, "PaidLeaveDays", new SimpleDateFormat("dd일 hh시간 mm분").format(leaveTime.getTime()));
+
+                    //personal leave days
                     if (ep_personalLeaveTv.getText().toString().equals("")){
                         ep_personalLeaveTv.setText("0");
                     }
@@ -159,6 +190,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put(MTYPE, mTypeSpinner.getSelectedItem().toString());
                     user.put(SDATE, ep_startingDateTv.getText().toString());
+                    user.put(PAIDLDAYS, sharedPreference.loadStringData(context, "PaidLeaveDays"));
+
                     updateUserToCloud(sharedPreference.loadStringData(context, "UserId"), user);
                     redirectProfileActivity();
                     break;
@@ -236,15 +269,36 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         //start date.
-        try {
-            if (sharedPreference.loadStringData(context, "StartingDate") != null){
+        if (sharedPreference.loadStringData(context, "StartingDate") == null){
+            sharedPreference.saveData(context, "StartingDate", df.format(me.getStartService()));
+        } else {
+            try {
                 me.setStartService(df.parse(sharedPreference.loadStringData(context, "StartingDate")));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        ep_startingDateTv.setText(df.format(me.getStartService()));
+
+        //paid leave days(연차)
+        Calendar calendar = Calendar.getInstance();
+
+        try {
+            if (sharedPreference.loadStringData(context, "PaidLeaveDays") != null){
+                Date paidLeaveTime = new SimpleDateFormat("dd일 hh시간 mm분").parse(sharedPreference.loadStringData(context, "PaidLeaveDays"));
+                calendar.setTime(paidLeaveTime);
+                me.setPaidLeaveDays(paidLeaveTime);
+
+                ep_paidLeaveDTv.setText(String.valueOf(calendar.get(Calendar.DATE)));
+                ep_paidLeaveHTv.setText(String.valueOf(calendar.get(Calendar.HOUR)));
+                ep_paidLeaveMTv.setText(String.valueOf(calendar.get(Calendar.MINUTE)));
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ep_startingDateTv.setText(df.format(me.getStartService()));
 
+
+        //personal leave days(복무 연장)
         ep_personalLeaveTv.setText(sharedPreference.loadStringData(context, "PersonalLeaveDays"));
     }
 

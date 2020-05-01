@@ -57,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity{
     private TextView startingDateTv, endingDateTv;
     private TextView totalDaysTv;
     private TextView discountDaysTv;
+    private TextView paidLeaveTv;
     private TextView personalLeaveTv;
     private Button editProfileBtn;
     private Button addFriendBtn;
@@ -91,6 +92,7 @@ public class ProfileActivity extends AppCompatActivity{
         endingDateTv = findViewById(R.id.TvEndingDate);
         totalDaysTv = findViewById(R.id.TvTotalDays);
         discountDaysTv = findViewById(R.id.TvDiscountDays);
+        paidLeaveTv = findViewById(R.id.TvPaidLeave);
         personalLeaveTv = findViewById(R.id.TvPersonalLeave);
 
         setProfileInfo();
@@ -148,12 +150,35 @@ public class ProfileActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
-        me.setEndService(getEndDate(
-                me.getMilitaryType(), me.getStartService(), me.getPersonalLeaveDays()));
+        me.setEndService(getEndDate(me.getMilitaryType(), me.getStartService(), me.getPersonalLeaveDays()));
         sharedPreference.saveData(context,SP_ENDDATE, df.format(me.getEndService()));
 
         startingDateTv.setText(df.format(me.getStartService()));
         endingDateTv.setText(df.format(me.getEndService()));
+
+        //paid leave days.
+        String paidLeaveHours =sharedPreference.loadStringData(context, "PaidLeaveDays");
+        paidLeaveTv.setText(paidLeaveHours);
+
+
+
+        int tNumPLeaveDays = 15;
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DAY_OF_MONTH, -365);
+        //1년 초과 확인
+        if (today.getTime().after(me.getStartService())){
+            //2020 3월 2일 이후 소집인지 확인
+            today.set(Calendar.YEAR, 2020);
+            today.set(Calendar.MONTH, 2);
+            today.set(Calendar.DAY_OF_MONTH, 1);
+            if (me.getStartService().after(today.getTime())){
+                tNumPLeaveDays = 13;
+            } else {
+                tNumPLeaveDays = 16;
+            }
+        }
+        paidLeaveTv.append(" / " + tNumPLeaveDays + "일");
+
     }
 
 
