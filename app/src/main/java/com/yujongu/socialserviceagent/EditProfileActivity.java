@@ -162,8 +162,8 @@ public class EditProfileActivity extends AppCompatActivity {
         ep_TvSpecial.setVisibility(View.VISIBLE);
         ep_EtUsedSpecial.setVisibility(View.VISIBLE);
         ep_EtUsedReward.setVisibility(View.VISIBLE);
-        ep_TvOfficial.setVisibility(View.INVISIBLE);
-        ep_EtUsedOfficial.setVisibility(View.INVISIBLE);
+        ep_TvOfficial.setVisibility(View.GONE);
+        ep_EtUsedOfficial.setVisibility(View.GONE);
     }
     AdapterView.OnItemSelectedListener avSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -222,8 +222,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     ep_TvSpecial.setVisibility(View.GONE);
                     ep_EtUsedSpecial.setVisibility(View.GONE);
                     ep_EtUsedReward.setVisibility(View.GONE);
-                    ep_TvOfficial.setVisibility(View.INVISIBLE);
-                    ep_EtUsedOfficial.setVisibility(View.INVISIBLE);
+                    ep_TvOfficial.setVisibility(View.GONE);
+                    ep_EtUsedOfficial.setVisibility(View.GONE);
                     break;
             }
         }
