@@ -23,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,6 +63,24 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private EditText ep_personalLeaveTv;
 
+    private TextView ep_TvDay;
+    private TextView ep_TvHour;
+    private TextView ep_TvMinute;
+    private TextView ep_TvUsedVacayH;
+    private TextView ep_TvUsedVacayD;
+    private TextView ep_TvSickH;
+    private TextView ep_TvSickD;
+    private EditText ep_EtUsedSickH;
+    private EditText ep_EtUsedSickD;
+    private EditText ep_EtPaidLeave;
+
+    private TextView ep_TvReward;
+    private TextView ep_TvSpecial;
+    private EditText ep_EtUsedReward;
+    private EditText ep_EtUsedSpecial;
+    private TextView ep_TvOfficial;
+    private EditText ep_EtUsedOfficial;
+
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
 
@@ -96,6 +116,24 @@ public class EditProfileActivity extends AppCompatActivity {
         ep_paidLeaveMTv = findViewById(R.id.ep_EtPaidLeaveM);
 
         ep_personalLeaveTv = findViewById(R.id.ep_EtPersonalLeave);
+
+        ep_TvDay = findViewById(R.id.ep_TvDay);
+        ep_TvHour = findViewById(R.id.ep_TvHour);
+        ep_TvMinute = findViewById(R.id.ep_TvMinute);
+        ep_TvUsedVacayH = findViewById(R.id.ep_TvUsedVacayH);
+        ep_TvUsedVacayD = findViewById(R.id.ep_TvUsedVacayD);
+        ep_TvSickH = findViewById(R.id.ep_TvSickH);
+        ep_TvSickD = findViewById(R.id.ep_TvSickD);
+        ep_EtUsedSickH = findViewById(R.id.ep_EtUsedSickH);
+        ep_EtUsedSickD = findViewById(R.id.ep_EtUsedSickD);
+        ep_EtPaidLeave = findViewById(R.id.ep_EtPaidLeave);
+
+        ep_TvReward = findViewById(R.id.ep_TvReward);
+        ep_TvSpecial = findViewById(R.id.ep_TvSpecial);
+        ep_EtUsedReward = findViewById(R.id.ep_EtUsedReward);
+        ep_EtUsedSpecial = findViewById(R.id.ep_EtUsedSpecial);
+        ep_TvOfficial = findViewById(R.id.ep_TvOfficial);
+        ep_EtUsedOfficial = findViewById(R.id.ep_EtUsedOfficial);
     }
 
     private void eventListeners(){
@@ -105,37 +143,87 @@ public class EditProfileActivity extends AppCompatActivity {
         ep_startingDateTv.setOnClickListener(listener);
 
     }
+
+    public void setVisibilitySoldier(){
+        ep_TvDay.setVisibility(View.GONE);
+        ep_TvHour.setVisibility(View.GONE);
+        ep_TvMinute.setVisibility(View.GONE);
+        ep_EtPaidLeave.setVisibility(View.VISIBLE);
+        ep_paidLeaveDTv.setVisibility(View.GONE);
+        ep_paidLeaveHTv.setVisibility(View.GONE);
+        ep_paidLeaveMTv.setVisibility(View.GONE);
+        ep_TvUsedVacayH.setVisibility(View.GONE);
+        ep_TvUsedVacayD.setVisibility(View.VISIBLE);
+        ep_TvSickH.setVisibility(View.GONE);
+        ep_TvSickD.setVisibility(View.VISIBLE);
+        ep_EtUsedSickH.setVisibility(View.GONE);
+        ep_EtUsedSickD.setVisibility(View.VISIBLE);
+        ep_TvReward.setVisibility(View.VISIBLE);
+        ep_TvSpecial.setVisibility(View.VISIBLE);
+        ep_EtUsedSpecial.setVisibility(View.VISIBLE);
+        ep_EtUsedReward.setVisibility(View.VISIBLE);
+        ep_TvOfficial.setVisibility(View.INVISIBLE);
+        ep_EtUsedOfficial.setVisibility(View.INVISIBLE);
+    }
     AdapterView.OnItemSelectedListener avSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             switch (adapterView.getItemAtPosition(i).toString()){
                 case "Army":
                     militaryNameTv.setText(MilitaryTypeEnum.ARMY.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Marine":
                     militaryNameTv.setText(MilitaryTypeEnum.MARINE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Navy":
                     militaryNameTv.setText(MilitaryTypeEnum.NAVY.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Airforce":
                     militaryNameTv.setText(MilitaryTypeEnum.AIRFORCE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Police":
                     militaryNameTv.setText(MilitaryTypeEnum.POLICE.getKName());
+                    setVisibilitySoldier();
+                    ep_TvOfficial.setVisibility(View.VISIBLE);
+                    ep_EtUsedOfficial.setVisibility(View.VISIBLE);
                     break;
 
                 case "Fire":
                     militaryNameTv.setText(MilitaryTypeEnum.FIRE.getKName());
+                    ep_TvOfficial.setVisibility(View.VISIBLE);
+                    ep_EtUsedOfficial.setVisibility(View.VISIBLE);
                     break;
 
                 case "SSA":
                 default:
                     militaryNameTv.setText(MilitaryTypeEnum.SSA.getKName());
+                    ep_TvDay.setVisibility(View.VISIBLE);
+                    ep_TvHour.setVisibility(View.VISIBLE);
+                    ep_TvMinute.setVisibility(View.VISIBLE);
+                    ep_EtPaidLeave.setVisibility(View.GONE);
+                    ep_paidLeaveDTv.setVisibility(View.VISIBLE);
+                    ep_paidLeaveHTv.setVisibility(View.VISIBLE);
+                    ep_paidLeaveMTv.setVisibility(View.VISIBLE);
+                    ep_TvUsedVacayH.setVisibility(View.VISIBLE);
+                    ep_TvUsedVacayD.setVisibility(View.GONE);
+                    ep_TvSickH.setVisibility(View.VISIBLE);
+                    ep_TvSickD.setVisibility(View.GONE);
+                    ep_EtUsedSickH.setVisibility(View.VISIBLE);
+                    ep_EtUsedSickD.setVisibility(View.GONE);
+                    ep_TvReward.setVisibility(View.GONE);
+                    ep_TvSpecial.setVisibility(View.GONE);
+                    ep_EtUsedSpecial.setVisibility(View.GONE);
+                    ep_EtUsedReward.setVisibility(View.GONE);
+                    ep_TvOfficial.setVisibility(View.INVISIBLE);
+                    ep_EtUsedOfficial.setVisibility(View.INVISIBLE);
                     break;
             }
         }

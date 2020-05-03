@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
 <RelativeLayout
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
@@ -103,7 +108,14 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:textSize="16sp"
-            android:text="사용 연가 시간"/>
+            android:text="사용 연가 시"
+            android:id="@+id/ep_TvUsedVacayH"/>
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 연가"
+            android:id="@+id/ep_TvUsedVacayD"/>
 
         <LinearLayout
             android:layout_width = "match_parent"
@@ -117,11 +129,19 @@
                 android:id="@+id/ep_EtPaidLeaveD"
                 android:textAlignment="textEnd"
                 android:textSize="16sp"/>
+            <EditText
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:id="@+id/ep_EtPaidLeave"
+                android:textSize="16sp"/>
             <TextView
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:textSize="16sp"
-                android:text="일"/>
+                android:text="일"
+                android:id="@+id/ep_TvDay"/>
 
             <EditText
                 android:layout_width = "0dp"
@@ -130,12 +150,13 @@
                 android:inputType="number"
                 android:id="@+id/ep_EtPaidLeaveH"
                 android:textAlignment="textEnd"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
             <TextView
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:textSize="16sp"
-                android:text="시간"/>
+                android:text="시간"
+                android:id="@+id/ep_TvHour"/>
 
             <EditText
                 android:layout_width = "0dp"
@@ -150,6 +171,7 @@
                 android:layout_height = "wrap_content"
                 android:textSize="16sp"
                 android:text="분"
+                android:id="@+id/ep_TvMinute"
                 android:layout_marginEnd="26dp"/>
         </LinearLayout>
 
@@ -157,16 +179,70 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:textSize="16sp"
-            android:text="사용 병가 시간"/>
+            android:text="사용 포상휴가"
+            android:id="@+id/ep_TvReward"/>
+
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:id="@+id/ep_EtUsedReward"/>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 위로휴가"
+            android:id="@+id/ep_TvSpecial"/>
+
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:id="@+id/ep_EtUsedSpecial"/>
 
 
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 병가 시간"
+            android:id="@+id/ep_TvSickH"/>
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 청원휴가(병가)"
+            android:id="@+id/ep_TvSickD"/>
 
         <EditText
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:textSize="16sp"
             android:hint="1일 병가 = 8시간"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:id="@+id/ep_EtUsedSickH"/>
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:id="@+id/ep_EtUsedSickD"/>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:text="사용 공가"
+            android:id="@+id/ep_TvOfficial"/>
+        <EditText
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:id="@+id/ep_EtUsedOfficial"/>
 
         <TextView
             android:layout_width = "wrap_content"
@@ -191,3 +267,4 @@
 
 
 </RelativeLayout>
+</ScrollView>

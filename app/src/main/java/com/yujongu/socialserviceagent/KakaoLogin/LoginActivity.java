@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
         Session.getCurrentSession().checkAndImplicitOpen();
+        //check internet & login
     }
 
     @Override
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("Session Opened", "Session Successfully Opened");
 //            redirectSignupActivity();  // 세션 연결성공 시 redirectSignupActivity() 호출
             requestMe();
+
         }
 
         @Override
@@ -112,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                         "" : response.getKakaoAccount().getProfile().getNickname();
                 final String url = response.getKakaoAccount().getProfile().getProfileImageUrl() == null ?
                         "" : response.getKakaoAccount().getProfile().getProfileImageUrl();
+                //user info
 
                 Map<String, Object> user = new HashMap<>();
                 user.put(KEY_ID, userId);
