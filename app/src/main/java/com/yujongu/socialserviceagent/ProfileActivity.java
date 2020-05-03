@@ -160,8 +160,6 @@ public class ProfileActivity extends AppCompatActivity{
         String paidLeaveHours =sharedPreference.loadStringData(context, "PaidLeaveDays");
         paidLeaveTv.setText(paidLeaveHours);
 
-
-
         int tNumPLeaveDays = 15;
         Calendar today = Calendar.getInstance();
         today.add(Calendar.DAY_OF_MONTH, -365);

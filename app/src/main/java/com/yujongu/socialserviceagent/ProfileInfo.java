@@ -8,7 +8,7 @@ public class ProfileInfo {
     private MilitaryTypeEnum militaryType;
     private Date startService;
     private Date endService;
-    private Date paidLeaveDays;
+    private String paidLeaveDays;
     private int personalLeaveDays;
 
     ProfileInfo(String name, String pictureUrl) {
@@ -20,11 +20,11 @@ public class ProfileInfo {
         this.personalLeaveDays = 0;
     }
 
-    public Date getPaidLeaveDays() {
+    public String getPaidLeaveDays() {
         return paidLeaveDays;
     }
 
-    public void setPaidLeaveDays(Date paidLeaveDays) {
+    public void setPaidLeaveDays(String paidLeaveDays) {
         this.paidLeaveDays = paidLeaveDays;
     }
 

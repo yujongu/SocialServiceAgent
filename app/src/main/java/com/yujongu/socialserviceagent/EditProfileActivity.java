@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -163,23 +164,26 @@ public class EditProfileActivity extends AppCompatActivity {
                     sharedPreference.saveData(context, "StartingDate", ep_startingDateTv.getText().toString());
 
                     //paid leave time
-                    Calendar leaveTime = Calendar.getInstance();
+                    int days = 0;
+                    int hours = 0;
+                    int minutes = 0;
                     if (ep_paidLeaveDTv.getText().toString().equals("")){
-                        leaveTime.set(Calendar.DATE, 0);
+                        days = 0;
                     } else {
-                        leaveTime.set(Calendar.DATE, Integer.parseInt(ep_paidLeaveDTv.getText().toString()));
+                        days = Integer.parseInt(ep_paidLeaveDTv.getText().toString());
                     }
                     if (ep_paidLeaveHTv.getText().toString().equals("")){
-                        leaveTime.set(Calendar.HOUR, 0);
+                        hours = 0;
                     } else {
-                        leaveTime.set(Calendar.HOUR, Integer.parseInt(ep_paidLeaveHTv.getText().toString()));
+                        hours = Integer.parseInt(ep_paidLeaveHTv.getText().toString());
+
                     }
                     if (ep_paidLeaveMTv.getText().toString().equals("")){
-                        leaveTime.set(Calendar.MINUTE, 0);
+                        minutes = 0;
                     } else {
-                        leaveTime.set(Calendar.MINUTE, Integer.parseInt(ep_paidLeaveMTv.getText().toString()));
+                        minutes = Integer.parseInt(ep_paidLeaveMTv.getText().toString());
                     }
-                    sharedPreference.saveData(context, "PaidLeaveDays", new SimpleDateFormat("dd일 hh시간 mm분").format(leaveTime.getTime()));
+                    sharedPreference.saveData(context, "PaidLeaveDays", days + "일 " + hours + "시간 " + minutes + "분");
 
                     //personal leave days
                     if (ep_personalLeaveTv.getText().toString().equals("")){
@@ -282,19 +286,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
         //paid leave days(연차)
         Calendar calendar = Calendar.getInstance();
+        if (sharedPreference.loadStringData(context, "PaidLeaveDays") != null){
+            String[] leaveDays = sharedPreference.loadStringData(context, "PaidLeaveDays").split(" ");
+            me.setPaidLeaveDays(sharedPreference.loadStringData(context, "PaidLeaveDays"));
+            ep_paidLeaveDTv.setText(leaveDays[0].replace("일", ""));
+            ep_paidLeaveHTv.setText(leaveDays[1].replace("시간", ""));
+            ep_paidLeaveMTv.setText(leaveDays[2].replace("분", ""));
 
-        try {
-            if (sharedPreference.loadStringData(context, "PaidLeaveDays") != null){
-                Date paidLeaveTime = new SimpleDateFormat("dd일 hh시간 mm분").parse(sharedPreference.loadStringData(context, "PaidLeaveDays"));
-                calendar.setTime(paidLeaveTime);
-                me.setPaidLeaveDays(paidLeaveTime);
 
-                ep_paidLeaveDTv.setText(String.valueOf(calendar.get(Calendar.DATE)));
-                ep_paidLeaveHTv.setText(String.valueOf(calendar.get(Calendar.HOUR)));
-                ep_paidLeaveMTv.setText(String.valueOf(calendar.get(Calendar.MINUTE)));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+//                Date paidLeaveTime = new SimpleDateFormat("d일 h시간 m분").parse(sharedPreference.loadStringData(context, "PaidLeaveDays"));
+//                calendar.setTime(paidLeaveTime);
+//                me.setPaidLeaveDays(paidLeaveTime);
+//
+//                ep_paidLeaveDTv.setText(String.valueOf(calendar.get(Calendar.DATE)));
+//                ep_paidLeaveHTv.setText(String.valueOf(calendar.get(Calendar.HOUR)));
+//                ep_paidLeaveMTv.setText(String.valueOf(calendar.get(Calendar.MINUTE)));
         }
 
 
