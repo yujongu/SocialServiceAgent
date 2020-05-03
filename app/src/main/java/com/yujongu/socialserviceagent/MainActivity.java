@@ -406,21 +406,24 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isComplete()){
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null){
-                        List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
-                        for (int i = 0; i < pairList.size(); i++){
-                            Log.i("TEST4", ((Timestamp) pairList.get(i).get("first")).toDate().toString());
-                            Calendar cal = Calendar.getInstance();
-                            cal.setTime(((Timestamp) pairList.get(i).get("first")).toDate());
-                            int year = cal.get(Calendar.YEAR);
-                            int month = cal.get(Calendar.MONTH) + 1;
-                            int date = cal.get(Calendar.DATE);
-                            Log.i(TAG, year + " " + month + " " + date);
-                            for (Day_Event day : mCalendarData){
-                                if (day.getYear() == year && day.getMonth() == month && day.getDate() == date){
-                                    day.setPaidLeave(new Pair<Date, Date>(((Timestamp) pairList.get(i).get("first")).toDate(), ((Timestamp) pairList.get(i).get("second")).toDate()));
+                        if (doc.get(PAIDLEAVE) != null){
+                            List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
+
+                            for (int i = 0; i < pairList.size(); i++){
+                                Log.i("TEST4", ((Timestamp) pairList.get(i).get("first")).toDate().toString());
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTime(((Timestamp) pairList.get(i).get("first")).toDate());
+                                int year = cal.get(Calendar.YEAR);
+                                int month = cal.get(Calendar.MONTH) + 1;
+                                int date = cal.get(Calendar.DATE);
+                                Log.i(TAG, year + " " + month + " " + date);
+                                for (Day_Event day : mCalendarData){
+                                    if (day.getYear() == year && day.getMonth() == month && day.getDate() == date){
+                                        day.setPaidLeave(new Pair<Date, Date>(((Timestamp) pairList.get(i).get("first")).toDate(), ((Timestamp) pairList.get(i).get("second")).toDate()));
+                                    }
                                 }
+                                mCalendarAdapter.notifyDataSetChanged();
                             }
-                            mCalendarAdapter.notifyDataSetChanged();
                         }
                     } else {
                         Log.d(TAG, "No Document Found");
