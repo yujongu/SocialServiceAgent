@@ -12,6 +12,7 @@ public class ProfileInfo {
     private int personalLeaveDays;
     private int rewardDays;
     private int specialDays;
+    private int sickDays;
 
     ProfileInfo(String name, String pictureUrl) {
         this.name = name;
@@ -32,8 +33,6 @@ public class ProfileInfo {
     public void setSickDays(int sickDays) {
         this.sickDays = sickDays;
     }
-
-    private int sickDays;
 
     public int getRewardDays() {
         return rewardDays;

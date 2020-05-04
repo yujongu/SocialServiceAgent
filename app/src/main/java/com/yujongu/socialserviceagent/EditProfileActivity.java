@@ -186,6 +186,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 case "Fire":
                     militaryNameTv.setText(MilitaryTypeEnum.FIRE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "SSA":
