@@ -271,42 +271,7 @@ public class ProfileActivity extends AppCompatActivity{
                     break;
 
                 case R.id.btnAddFriend:
-
-                    // 컨텍스트 생성
-//   - 닉네임, 처음(index 0)부터, 100명까지, 오름차순 예시
-                    AppFriendContext context =
-                            new AppFriendContext(AppFriendOrder.NICKNAME, 0, 100, "asc");
-
-// 조회 요청
-                    KakaoTalkService.getInstance()
-                            .requestAppFriends(context, new TalkResponseCallback<AppFriendsResponse>() {
-                                @Override
-                                public void onNotKakaoTalkUser() {
-                                    Log.e("KAKAO_API", "카카오톡 사용자가 아님");
-                                }
-
-                                @Override
-                                public void onSessionClosed(ErrorResult errorResult) {
-                                    Log.e("KAKAO_API", "세션이 닫혀 있음: " + errorResult);
-                                }
-
-                                @Override
-                                public void onFailure(ErrorResult errorResult) {
-                                    Log.e("KAKAO_API", "친구 조회 실패: " + errorResult);
-                                }
-
-                                @Override
-                                public void onSuccess(AppFriendsResponse result) {
-                                    Log.i("KAKAO_API", "친구 조회 성공");
-
-                                    for (AppFriendInfo friend : result.getFriends()) {
-                                        Log.d("KAKAO_API", friend.toString());
-
-                                        String uuid = friend.getUUID();     // 메시지 전송 시 사용
-                                    }
-                                }
-                            });
-
+                    redirectAddFriendsActivity();
                     break;
             }
         }
@@ -362,6 +327,10 @@ public class ProfileActivity extends AppCompatActivity{
         finish();
     }
 
+    private void redirectAddFriendsActivity(){
+        Intent intent = new Intent(ProfileActivity.this, AddFriendsActivity.class);
+        startActivity(intent);
+    }
 
 
 

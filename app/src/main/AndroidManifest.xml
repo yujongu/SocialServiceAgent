@@ -12,7 +12,8 @@
         android:roundIcon = "@drawable/ssacircleicon"
         android:supportsRtl = "true"
         android:theme = "@style/AppTheme">
-        <activity android:name = ".EditProfileActivity"></activity>
+        <activity android:name = ".AddFriendsActivity"></activity>
+        <activity android:name = ".EditProfileActivity" />
         <activity android:name = ".DayActivity" />
         <activity android:name = ".ProfileActivity" />
         <activity
