@@ -38,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-
     final static String TAG = "LoginActivityT";
     final static String KEY_ID = "UserId";
     final static String KEY_NAME = "Name";
@@ -158,7 +156,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
-
 }

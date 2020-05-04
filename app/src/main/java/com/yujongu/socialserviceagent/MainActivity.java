@@ -408,7 +408,6 @@ public class MainActivity extends AppCompatActivity {
                     if (doc != null){
                         if (doc.get(PAIDLEAVE) != null){
                             List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
-
                             for (int i = 0; i < pairList.size(); i++){
                                 Log.i("TEST4", ((Timestamp) pairList.get(i).get("first")).toDate().toString());
                                 Calendar cal = Calendar.getInstance();
