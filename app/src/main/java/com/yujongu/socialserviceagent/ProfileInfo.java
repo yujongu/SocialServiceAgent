@@ -10,6 +10,8 @@ public class ProfileInfo {
     private Date endService;
     private String paidLeaveDays;
     private int personalLeaveDays;
+    private int rewardDays;
+    private int specialDays;
 
     ProfileInfo(String name, String pictureUrl) {
         this.name = name;
@@ -18,6 +20,35 @@ public class ProfileInfo {
         this.startService = new Date();
         this.endService = new Date();
         this.personalLeaveDays = 0;
+        this.rewardDays = 0;
+        this.specialDays = 0;
+        this.sickDays = 0;
+    }
+
+    public int getSickDays() {
+        return sickDays;
+    }
+
+    public void setSickDays(int sickDays) {
+        this.sickDays = sickDays;
+    }
+
+    private int sickDays;
+
+    public int getRewardDays() {
+        return rewardDays;
+    }
+
+    public void setRewardDays(int rewardDays) {
+        this.rewardDays = rewardDays;
+    }
+
+    public int getSpecialDays() {
+        return specialDays;
+    }
+
+    public void setSpecialDays(int specialDays) {
+        this.specialDays = specialDays;
     }
 
     public String getPaidLeaveDays() {

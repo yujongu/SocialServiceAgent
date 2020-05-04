@@ -221,28 +221,9 @@
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:textSize="16sp"
-            android:hint="1일 병가 = 8시간"
+            android:hint="1일 병가 = 8시간 (사회복무요원 적용)"
             android:inputType="number"
-            android:id="@+id/ep_EtUsedSickH"/>
-        <EditText
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:textSize="16sp"
-            android:inputType="number"
-            android:id="@+id/ep_EtUsedSickD"/>
-
-        <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:textSize="16sp"
-            android:text="사용 공가"
-            android:id="@+id/ep_TvOfficial"/>
-        <EditText
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:textSize="16sp"
-            android:inputType="number"
-            android:id="@+id/ep_EtUsedOfficial"/>
+            android:id="@+id/ep_EtUsedSick"/>
 
         <TextView
             android:layout_width = "wrap_content"

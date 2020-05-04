@@ -8,5 +8,11 @@
     <color name="colorSSAPrimaryDark">#434654</color>
     <color name = "colorAccentOrange">#FFA124</color>
     <color name = "colorAccentDarkOrange">#FF9200</color>
+    <color name = "colorArmy">#456646</color>
+    <color name = "colorNavy">#1885B7</color>
+    <color name = "colorAir">#263790</color>
+    <color name = "colorMarine">#A70D0D</color>
+    <color name = "colorPolice">#8D8D8D</color>
+    <color name = "colorFire">#C85834</color>
 
 </resources>
