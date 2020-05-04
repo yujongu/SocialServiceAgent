@@ -23,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,12 +54,26 @@ public class EditProfileActivity extends AppCompatActivity {
     private Spinner mTypeSpinner;
     private TextView militaryNameTv;
 
-
     private EditText ep_paidLeaveDTv;
     private EditText ep_paidLeaveHTv;
     private EditText ep_paidLeaveMTv;
 
     private EditText ep_personalLeaveTv;
+
+    private TextView ep_TvDay;
+    private TextView ep_TvHour;
+    private TextView ep_TvMinute;
+    private TextView ep_TvUsedVacayH;
+    private TextView ep_TvUsedVacayD;
+    private TextView ep_TvSickH;
+    private TextView ep_TvSickD;
+    private EditText ep_EtUsedSick;
+    private EditText ep_EtPaidLeave;
+
+    private TextView ep_TvReward;
+    private TextView ep_TvSpecial;
+    private EditText ep_EtUsedReward;
+    private EditText ep_EtUsedSpecial;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
@@ -94,6 +110,22 @@ public class EditProfileActivity extends AppCompatActivity {
         ep_paidLeaveMTv = findViewById(R.id.ep_EtPaidLeaveM);
 
         ep_personalLeaveTv = findViewById(R.id.ep_EtPersonalLeave);
+
+        ep_TvDay = findViewById(R.id.ep_TvDay);
+        ep_TvHour = findViewById(R.id.ep_TvHour);
+        ep_TvMinute = findViewById(R.id.ep_TvMinute);
+        ep_TvUsedVacayH = findViewById(R.id.ep_TvUsedVacayH);
+        ep_TvUsedVacayD = findViewById(R.id.ep_TvUsedVacayD);
+        ep_TvSickH = findViewById(R.id.ep_TvSickH);
+        ep_TvSickD = findViewById(R.id.ep_TvSickD);
+        ep_EtPaidLeave = findViewById(R.id.ep_EtPaidLeave);
+
+        ep_TvReward = findViewById(R.id.ep_TvReward);
+        ep_TvSpecial = findViewById(R.id.ep_TvSpecial);
+        ep_EtUsedReward = findViewById(R.id.ep_EtUsedReward);
+        ep_EtUsedSpecial = findViewById(R.id.ep_EtUsedSpecial);
+        ep_EtUsedSick = findViewById(R.id.ep_EtUsedSick);
+
     }
 
     private void eventListeners(){
@@ -103,37 +135,76 @@ public class EditProfileActivity extends AppCompatActivity {
         ep_startingDateTv.setOnClickListener(listener);
 
     }
+
+    public void setVisibilitySoldier(){
+        ep_TvDay.setVisibility(View.GONE);
+        ep_TvHour.setVisibility(View.GONE);
+        ep_TvMinute.setVisibility(View.GONE);
+        ep_EtPaidLeave.setVisibility(View.VISIBLE);
+        ep_paidLeaveDTv.setVisibility(View.GONE);
+        ep_paidLeaveHTv.setVisibility(View.GONE);
+        ep_paidLeaveMTv.setVisibility(View.GONE);
+        ep_TvUsedVacayH.setVisibility(View.GONE);
+        ep_TvUsedVacayD.setVisibility(View.VISIBLE);
+        ep_TvSickH.setVisibility(View.GONE);
+        ep_TvSickD.setVisibility(View.VISIBLE);
+        ep_TvReward.setVisibility(View.VISIBLE);
+        ep_TvSpecial.setVisibility(View.VISIBLE);
+        ep_EtUsedSpecial.setVisibility(View.VISIBLE);
+        ep_EtUsedReward.setVisibility(View.VISIBLE);
+    }
     AdapterView.OnItemSelectedListener avSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             switch (adapterView.getItemAtPosition(i).toString()){
                 case "Army":
                     militaryNameTv.setText(MilitaryTypeEnum.ARMY.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Marine":
                     militaryNameTv.setText(MilitaryTypeEnum.MARINE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Navy":
                     militaryNameTv.setText(MilitaryTypeEnum.NAVY.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Airforce":
                     militaryNameTv.setText(MilitaryTypeEnum.AIRFORCE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Police":
                     militaryNameTv.setText(MilitaryTypeEnum.POLICE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "Fire":
                     militaryNameTv.setText(MilitaryTypeEnum.FIRE.getKName());
+                    setVisibilitySoldier();
                     break;
 
                 case "SSA":
                 default:
                     militaryNameTv.setText(MilitaryTypeEnum.SSA.getKName());
+                    ep_TvDay.setVisibility(View.VISIBLE);
+                    ep_TvHour.setVisibility(View.VISIBLE);
+                    ep_TvMinute.setVisibility(View.VISIBLE);
+                    ep_EtPaidLeave.setVisibility(View.GONE);
+                    ep_paidLeaveDTv.setVisibility(View.VISIBLE);
+                    ep_paidLeaveHTv.setVisibility(View.VISIBLE);
+                    ep_paidLeaveMTv.setVisibility(View.VISIBLE);
+                    ep_TvUsedVacayH.setVisibility(View.VISIBLE);
+                    ep_TvUsedVacayD.setVisibility(View.GONE);
+                    ep_TvSickH.setVisibility(View.VISIBLE);
+                    ep_TvSickD.setVisibility(View.GONE);
+                    ep_TvReward.setVisibility(View.GONE);
+                    ep_TvSpecial.setVisibility(View.GONE);
+                    ep_EtUsedSpecial.setVisibility(View.GONE);
+                    ep_EtUsedReward.setVisibility(View.GONE);
                     break;
             }
         }
@@ -148,6 +219,10 @@ public class EditProfileActivity extends AppCompatActivity {
     final static String SDATE = "Start Date";
     final static String EDATE = "End Date";
     final static String PAIDLDAYS = "Paid Leave Hours";
+    final static String PAIDLDAYSSOLDIERS = "Paid Leave Hours Soldiers";
+    final static String REWARDDAYS = "Paid Reward Days";
+    final static String SPECIALDAYS = "Paid Special Days";
+    final static String SICKDAYS = "Paid Sick Days";
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
@@ -165,10 +240,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     int days = 0;
                     int hours = 0;
                     int minutes = 0;
-                    if (ep_paidLeaveDTv.getText().toString().equals("")){
+                    if (ep_paidLeaveDTv.getText().toString().equals("") || ep_EtPaidLeave.getText().toString().equals("")){
                         days = 0;
                     } else {
                         days = Integer.parseInt(ep_paidLeaveDTv.getText().toString());
+                        days = Integer.parseInt(ep_EtPaidLeave.getText().toString());
                     }
                     if (ep_paidLeaveHTv.getText().toString().equals("")){
                         hours = 0;
@@ -182,6 +258,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         minutes = Integer.parseInt(ep_paidLeaveMTv.getText().toString());
                     }
                     sharedPreference.saveData(context, "PaidLeaveDays", days + "일 " + hours + "시간 " + minutes + "분");
+                    sharedPreference.saveData(context, "PaidLeaveDaysSoldiers", days + "일");
 
                     //personal leave days
                     if (ep_personalLeaveTv.getText().toString().equals("")){
@@ -189,10 +266,22 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                     sharedPreference.saveData(context, "PersonalLeaveDays", ep_personalLeaveTv.getText().toString());
 
+                    //포상휴가
+                    sharedPreference.saveData(context, "UsedReward", ep_EtUsedReward.getText().toString());
+                    //위로휴가
+                    sharedPreference.saveData(context, "UsedSpecial", ep_EtUsedSpecial.getText().toString());
+
+                    //청원 및 병가
+                    sharedPreference.saveData(context, "UsedSick", ep_EtUsedSick.getText().toString());
+
                     Map<String, Object> user = new HashMap<>();
                     user.put(MTYPE, mTypeSpinner.getSelectedItem().toString());
                     user.put(SDATE, ep_startingDateTv.getText().toString());
                     user.put(PAIDLDAYS, sharedPreference.loadStringData(context, "PaidLeaveDays"));
+                    user.put(PAIDLDAYSSOLDIERS, sharedPreference.loadStringData(context, "PaidLeaveDaysSoldiers"));
+                    user.put(REWARDDAYS, sharedPreference.loadStringData(context, "UsedReward"));
+                    user.put(SPECIALDAYS, sharedPreference.loadStringData(context, "UsedSpecial"));
+                    user.put(SICKDAYS, sharedPreference.loadStringData(context, "UsedSick"));
 
                     updateUserToCloud(sharedPreference.loadStringData(context, "UserId"), user);
                     redirectProfileActivity();
@@ -300,10 +389,24 @@ public class EditProfileActivity extends AppCompatActivity {
 //                ep_paidLeaveHTv.setText(String.valueOf(calendar.get(Calendar.HOUR)));
 //                ep_paidLeaveMTv.setText(String.valueOf(calendar.get(Calendar.MINUTE)));
         }
-
+        if (sharedPreference.loadStringData(context, "PaidLeaveDaysSoldiers") != null) {
+            String leaveDays = sharedPreference.loadStringData(context, "PaidLeaveDaysSoldiers");
+            me.setPaidLeaveDays(sharedPreference.loadStringData(context, "PaidLeaveDaysSoldiers"));
+            ep_EtPaidLeave.setText(leaveDays.replace("일", ""));
+        }
 
         //personal leave days(복무 연장)
         ep_personalLeaveTv.setText(sharedPreference.loadStringData(context, "PersonalLeaveDays"));
+
+        //포상휴가
+        ep_EtUsedReward.setText(sharedPreference.loadStringData(context, "UsedReward"));
+
+        //위로휴가
+        ep_EtUsedSpecial.setText(sharedPreference.loadStringData(context, "UsedSpecial"));
+
+        //청원 및 병가
+        ep_EtUsedSick.setText(sharedPreference.loadStringData(context, "UsedSick"));
+
     }
 
     @Override
