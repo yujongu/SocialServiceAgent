@@ -2,24 +2,20 @@ package com.yujongu.socialserviceagent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.kakao.friends.AppFriendContext;
-import com.kakao.friends.AppFriendOrder;
-import com.kakao.friends.response.AppFriendsResponse;
-import com.kakao.friends.response.model.AppFriendInfo;
-import com.kakao.kakaotalk.callback.TalkResponseCallback;
-import com.kakao.kakaotalk.v2.KakaoTalkService;
-import com.kakao.network.ErrorResult;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -48,6 +44,9 @@ public class ProfileActivity extends AppCompatActivity{
     final static String SP_ENDDATE = "EndingDate";
     final static String SP_MTYPE = "MilitaryType";
     final static String SP_PERSONLEAVEDAYS = "PersonalLeaveDays";
+    final static String SP_REWARDDAYS = "UsedReward";
+    final static String SP_SPECIALDAYS = "UsedSpecial";
+    final static String SP_SICKDAYS = "UsedSick";
 
     //todo set multiple friend profiles to view
     Activity context = ProfileActivity.this;
@@ -66,8 +65,16 @@ public class ProfileActivity extends AppCompatActivity{
     private TextView discountDaysTv;
     private TextView paidLeaveTv;
     private TextView personalLeaveTv;
+    private TextView TvPaidReward;
+    private TextView TvPaidSpecial;
     private Button editProfileBtn;
     private Button addFriendBtn;
+    private TableLayout tablelayout;
+    private TableRow rowReward;
+    private TableRow rowSpecial;
+    private TextView TvTotalReward;
+    private TextView TvSick;
+    private TextView TvSickLeave;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
@@ -88,6 +95,8 @@ public class ProfileActivity extends AppCompatActivity{
         sharedPreference = new SharedPreference();
         db = FirebaseFirestore.getInstance();
 
+        tablelayout = findViewById(R.id.tablelayout);
+
         pbProgress = findViewById(R.id.timeLeftPb);
         progressTv = findViewById(R.id.tvProgress);
         profileIv = findViewById(R.id.profile_image);
@@ -101,13 +110,60 @@ public class ProfileActivity extends AppCompatActivity{
         discountDaysTv = findViewById(R.id.TvDiscountDays);
         paidLeaveTv = findViewById(R.id.TvPaidLeave);
         personalLeaveTv = findViewById(R.id.TvPersonalLeave);
+        TvPaidReward = findViewById(R.id.TvPaidReward);
+        TvPaidSpecial = findViewById(R.id.TvPaidSpecial);
+        rowReward = findViewById(R.id.rowReward);
+        rowSpecial = findViewById(R.id.rowSpecial);
+        TvTotalReward = findViewById(R.id.TvTotalReward);
+        TvSick = findViewById(R.id.TvSick);
+        TvSickLeave = findViewById(R.id.TvSickLeave);
+
 
         setProfileInfo();
+        if(militaryNameTv.getText().toString().equals("육군")){
+            rowSoldier();
+            militaryNameTv.setTextColor(Color.parseColor("#456646"));
+        }else if(militaryNameTv.getText().toString().equals("해군")){
+            militaryNameTv.setTextColor(Color.parseColor("#1885B7"));
+            rowSoldier();
+        }else if(militaryNameTv.getText().toString().equals("공군")) {
+            militaryNameTv.setTextColor(Color.parseColor("#263790"));
+            rowSoldier();
+        }else if(militaryNameTv.getText().toString().equals("해병대")) {
+            militaryNameTv.setTextColor(Color.parseColor("#A70D0D"));
+            rowSoldier();
+        }else if(militaryNameTv.getText().toString().equals("의경")) {
+            militaryNameTv.setTextColor(Color.parseColor("#8D8D8D"));
+            rowSoldier();
+        }else if(militaryNameTv.getText().toString().equals("의무소방")) {
+            militaryNameTv.setTextColor(Color.parseColor("#C85834"));
+            rowSoldier();
+        }else if(militaryNameTv.getText().toString().equals("사회복무요원")) {
+            militaryNameTv.setTextColor(Color.parseColor("#833651"));
+            rowReward.setVisibility(View.GONE);
+            rowSpecial.setVisibility(View.GONE);
+        }
     }
 
     private void eventListeners(){
         editProfileBtn.setOnClickListener(listener);
         addFriendBtn.setOnClickListener(listener);
+    }
+
+    private void rowSoldier(){
+        rowReward.setVisibility(View.VISIBLE);
+        rowSpecial.setVisibility(View.VISIBLE);
+        TvSick.setText("청원휴가(병가): ");
+    }
+
+    private void vacayDurationAMP(){
+        if(Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))>45 && Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))<76){
+            paidLeaveTv.append((" / " + 26 + "일"));
+        }else if(Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))>75 && Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))<90) {
+            paidLeaveTv.append((" / " + 25 + "일"));
+        }else{
+            paidLeaveTv.append((" / " + 24 + "일"));
+        }
     }
 
     private void setProfileInfo(){
@@ -165,24 +221,78 @@ public class ProfileActivity extends AppCompatActivity{
 
         //paid leave days.
         String paidLeaveHours =sharedPreference.loadStringData(context, "PaidLeaveDays");
-        paidLeaveTv.setText(paidLeaveHours);
 
-        int tNumPLeaveDays = 15;
-        Calendar today = Calendar.getInstance();
-        today.add(Calendar.DAY_OF_MONTH, -365);
-        //1년 초과 확인
-        if (today.getTime().after(me.getStartService())){
-            //2020 3월 2일 이후 소집인지 확인
-            today.set(Calendar.YEAR, 2020);
-            today.set(Calendar.MONTH, 2);
-            today.set(Calendar.DAY_OF_MONTH, 1);
-            if (me.getStartService().after(today.getTime())){
-                tNumPLeaveDays = 13;
-            } else {
-                tNumPLeaveDays = 16;
+
+
+        if(militaryNameTv.getText().toString().equals("육군")){
+            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            //정해진 휴가일수 측정
+            TvTotalReward.setText("포상휴가(총 18): ");
+            vacayDurationAMP();
+        }else if(militaryNameTv.getText().toString().equals("해군")){
+            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            TvTotalReward.setText("포상휴가(총 19): ");
+            paidLeaveTv.append((" / " + 27 + "일"));
+        }else if(militaryNameTv.getText().toString().equals("공군")) {
+            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            TvTotalReward.setText("포상휴가(총 20): ");
+            paidLeaveTv.append((" / " + 29 + "일"));
+        }else if(militaryNameTv.getText().toString().equals("해병대")) {
+            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            TvTotalReward.setText("포상휴가(총 19): ");
+            vacayDurationAMP();
+        }else if(militaryNameTv.getText().toString().equals("의경")) {
+            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            TvTotalReward.setText("포상휴가: ");
+            vacayDurationAMP();
+        }else if(militaryNameTv.getText().toString().equals("의무소방")) {
+            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            TvTotalReward.setText("포상휴가: ");
+            paidLeaveTv.append((" / " + 27 + "일"));
+        }else if(militaryNameTv.getText().toString().equals("사회복무요원")) {
+            paidLeaveTv.setText(paidLeaveHours);
+            int tNumPLeaveDays = 15;
+            Calendar today = Calendar.getInstance();
+            today.add(Calendar.DAY_OF_MONTH, -365);
+            //1년 초과 확인
+            if (today.getTime().after(me.getStartService())){
+                //2020 3월 2일 이후 소집인지 확인
+                today.set(Calendar.YEAR, 2020);
+                today.set(Calendar.MONTH, 2);
+                today.set(Calendar.DAY_OF_MONTH, 1);
+                if (me.getStartService().after(today.getTime())){
+                    tNumPLeaveDays = 13;
+                } else {
+                    tNumPLeaveDays = 16;
+                }
             }
+            paidLeaveTv.append(" / " + tNumPLeaveDays + "일");
+            TvSick.setText("병가(총 30): ");
         }
-        paidLeaveTv.append(" / " + tNumPLeaveDays + "일");
+
+        //포상휴가
+        if (sharedPreference.loadStringData(context, SP_REWARDDAYS) == null){
+            sharedPreference.saveData(context, SP_REWARDDAYS, String.valueOf(me.getRewardDays()));
+        } else {
+            me.setRewardDays(Integer.parseInt(sharedPreference.loadStringData(context, SP_REWARDDAYS)));
+        }
+        TvPaidReward.setText(getString(R.string.dateText, me.getRewardDays()));
+
+        //위로휴가
+        if (sharedPreference.loadStringData(context, SP_SPECIALDAYS) == null){
+            sharedPreference.saveData(context, SP_SPECIALDAYS, String.valueOf(me.getSpecialDays()));
+        } else {
+            me.setSpecialDays(Integer.parseInt(sharedPreference.loadStringData(context, SP_SPECIALDAYS)));
+        }
+        TvPaidSpecial.setText(getString(R.string.dateText, me.getSpecialDays()));
+
+        //병가 및 청원
+        if (sharedPreference.loadStringData(context, SP_SICKDAYS) == null){
+            sharedPreference.saveData(context, SP_SICKDAYS, String.valueOf(me.getSickDays()));
+        } else {
+            me.setSickDays(Integer.parseInt(sharedPreference.loadStringData(context, SP_SICKDAYS)));
+        }
+        TvSickLeave.setText(getString(R.string.dateText, me.getSickDays()));
 
     }
 
@@ -257,6 +367,7 @@ public class ProfileActivity extends AppCompatActivity{
                 return MilitaryTypeEnum.FIRE;
 
             case "SSA":
+                return MilitaryTypeEnum.SSA;
             default:
                 return MilitaryTypeEnum.SSA;
         }
