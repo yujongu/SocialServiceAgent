@@ -13,6 +13,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.kakao.friends.AppFriendContext;
+import com.kakao.friends.AppFriendOrder;
+import com.kakao.friends.response.AppFriendsResponse;
+import com.kakao.friends.response.model.AppFriendInfo;
+import com.kakao.kakaotalk.callback.TalkResponseCallback;
+import com.kakao.kakaotalk.v2.KakaoTalkService;
+import com.kakao.network.ErrorResult;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -99,8 +106,8 @@ public class ProfileActivity extends AppCompatActivity{
     }
 
     private void eventListeners(){
-        startingDateTv.setOnClickListener(listener);
         editProfileBtn.setOnClickListener(listener);
+        addFriendBtn.setOnClickListener(listener);
     }
 
     private void setProfileInfo(){
@@ -264,7 +271,7 @@ public class ProfileActivity extends AppCompatActivity{
                     break;
 
                 case R.id.btnAddFriend:
-
+                    redirectAddFriendsActivity();
                     break;
             }
         }
@@ -320,6 +327,10 @@ public class ProfileActivity extends AppCompatActivity{
         finish();
     }
 
+    private void redirectAddFriendsActivity(){
+        Intent intent = new Intent(ProfileActivity.this, AddFriendsActivity.class);
+        startActivity(intent);
+    }
 
 
 
