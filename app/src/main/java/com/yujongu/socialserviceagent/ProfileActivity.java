@@ -16,13 +16,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.kakao.friends.AppFriendContext;
-import com.kakao.friends.AppFriendOrder;
-import com.kakao.friends.response.AppFriendsResponse;
-import com.kakao.friends.response.model.AppFriendInfo;
-import com.kakao.kakaotalk.callback.TalkResponseCallback;
-import com.kakao.kakaotalk.v2.KakaoTalkService;
-import com.kakao.network.ErrorResult;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
