@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -59,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity{
     private ProgressBar pbProgress;
     private CircleImageView profileIv;
     private TextView profileNameTv;
+    private ImageButton notifBtn;
     private TextView militaryNameTv;
     private TextView startingDateTv, endingDateTv;
     private TextView totalDaysTv;
@@ -101,6 +103,7 @@ public class ProfileActivity extends AppCompatActivity{
         progressTv = findViewById(R.id.tvProgress);
         profileIv = findViewById(R.id.profile_image);
         profileNameTv = findViewById(R.id.profile_name);
+        notifBtn = findViewById(R.id.btnNotif);
         editProfileBtn = findViewById(R.id.btnEditProfile);
         addFriendBtn = findViewById(R.id.btnAddFriend);
         militaryNameTv = findViewById(R.id.TvMilitaryName);
@@ -148,6 +151,7 @@ public class ProfileActivity extends AppCompatActivity{
     private void eventListeners(){
         editProfileBtn.setOnClickListener(listener);
         addFriendBtn.setOnClickListener(listener);
+        notifBtn.setOnClickListener(listener);
     }
 
     private void rowSoldier(){
@@ -224,11 +228,9 @@ public class ProfileActivity extends AppCompatActivity{
 
         if (sharedPreference.loadStringData(context, "PaidLeaveDays") == null){
             paidLeaveHours = "0일 0시간 0분";
-
         }
         String[] hold = paidLeaveHours.split(" ");
         paidLeaveHours = hold[0];
-
 
         if(militaryNameTv.getText().toString().equals("육군")){
             paidLeaveTv.setText(paidLeaveHours);
@@ -397,6 +399,11 @@ public class ProfileActivity extends AppCompatActivity{
 
                 case R.id.btnAddFriend:
                     redirectAddFriendsActivity();
+                    break;
+
+                case R.id.btnNotif:
+                    NotificationDialog notificationDialog = new NotificationDialog(context);
+                    notificationDialog.show();
                     break;
             }
         }

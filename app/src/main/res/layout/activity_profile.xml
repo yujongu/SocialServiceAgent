@@ -53,6 +53,18 @@
         android:layout_marginBottom="16dp"
         />
 
+    <ImageButton
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:id="@+id/btnNotif"
+        android:src="@drawable/baseline_notifications_none_black_24"
+        android:background="@android:color/transparent"
+        android:layout_alignEnd="@+id/settingsLayout"
+        android:layout_alignBottom="@id/profile_name"
+        android:layout_marginEnd="10dp"
+        android:padding="10dp"
+        />
+
 
 
     <LinearLayout

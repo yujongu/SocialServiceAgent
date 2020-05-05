@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         eventListeners();
 
     }
-
     private void initInstances(){
         context = this;
         sharedPreference = new SharedPreference();

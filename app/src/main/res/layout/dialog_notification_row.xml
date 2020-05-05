@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    android:layout_width = "300dp"
+    android:layout_height = "70dp"
+    android:orientation="horizontal"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width = "50dp"
+        android:layout_height = "50dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/notifDialogProfImg"
+        android:layout_marginEnd="18dp"/>
+
+    <TextView
+        android:layout_width = "80dp"
+        android:layout_height = "wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="유정우"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="18sp"
+        android:id="@+id/notifDialogProfName"/>
+
+    <Space
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_marginEnd="28dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
+
+        <ImageButton
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src="@drawable/baseline_check_black_24dp"
+            android:background="@android:color/transparent"
+            android:id="@+id/btnAcceptFriend"
+            android:padding="8dp"
+            android:layout_marginEnd="10dp"/>
+        <ImageButton
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src="@drawable/baseline_clear_black_24dp"
+            android:background="@android:color/transparent"
+            android:id="@+id/btnDeclineFriend"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

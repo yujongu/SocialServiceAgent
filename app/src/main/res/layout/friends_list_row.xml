@@ -21,15 +21,28 @@
         android:layout_toRightOf="@+id/thumbnailIv"
         android:textSize="16sp"/>
 
-    <Button
+    <LinearLayout
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
-        android:id="@+id/friendsListAddBtn"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:layout_marginEnd="8dp"
-        android:padding="10dp"
-        android:text="Add Friend"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true">
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:id="@+id/statusTv"
+            android:text="요청 보내짐"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:id="@+id/friendsListAddBtn"
+            android:text="Add Friend"
+            />
+    </LinearLayout>
+
 
 
 </RelativeLayout>

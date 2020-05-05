@@ -43,6 +43,7 @@ public class AddFriendsActivity extends AppCompatActivity {
     private void eventListeners(){
         friendsListview.setAdapter(friendsAdapter);
     }
+
     private void findFriends(){
         AppFriendContext context = new AppFriendContext(AppFriendOrder.NICKNAME, 0, 100, "asc");
 

@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     final static String KEY_NAME = "Name";
     final static String KEY_IMAGE = "Image URL";
     final static String FRIENDSLIST = "Friends List";
+    final static String REQUESTSLIST = "Request Lists";
     final static String NOTIFICATION = "Notifications";
 
     @Override
@@ -125,6 +126,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 ArrayList<String> friendList = new ArrayList<>();
                 user.put(FRIENDSLIST, friendList);
+
+                ArrayList<String> requestsSentList = new ArrayList<>();
+                user.put(REQUESTSLIST, requestsSentList);
 
                 ArrayList<String> notifs = new ArrayList<>();
                 user.put(NOTIFICATION, notifs);
