@@ -2,6 +2,7 @@ package com.yujongu.socialserviceagent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -71,5 +72,16 @@ public class AddFriendsActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        redirectProfileActivity();
+    }
+
+    private void redirectProfileActivity(){
+        Intent intent = new Intent(AddFriendsActivity.this, ProfileActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

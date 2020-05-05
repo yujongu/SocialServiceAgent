@@ -25,6 +25,8 @@ import com.yujongu.socialserviceagent.MainActivity;
 import com.yujongu.socialserviceagent.R;
 import com.yujongu.socialserviceagent.SharedPreference;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     final static String KEY_ID = "UserId";
     final static String KEY_NAME = "Name";
     final static String KEY_IMAGE = "Image URL";
+    final static String FRIENDSLIST = "Friends List";
+    final static String NOTIFICATION = "Notifications";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +123,21 @@ public class LoginActivity extends AppCompatActivity {
                 user.put(KEY_NAME, nickname);
                 user.put(KEY_IMAGE, url);
 
+                ArrayList<String> friendList = new ArrayList<>();
+                user.put(FRIENDSLIST, friendList);
+
+                ArrayList<String> notifs = new ArrayList<>();
+                user.put(NOTIFICATION, notifs);
+
                 if (sharedPreference.loadStringData(context, "UserId") == null){
                     saveUserToCloud(String.valueOf(response.getId()), user);
+                } else if (!sharedPreference.loadStringData(context, "UserId").equals(userId)
+                        || !sharedPreference.loadStringData(context, "ProfileName").equals(nickname)
+                        || !sharedPreference.loadStringData(context, "ProfilePicUrl").equals(url)){
+                    saveUserToCloud(String.valueOf(response.getId()), user);
                 }
+
+
 
                 sharedPreference.saveData(context, "UserId", userId);
                 sharedPreference.saveData(context, "ProfileName", nickname);

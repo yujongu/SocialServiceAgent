@@ -222,34 +222,48 @@ public class ProfileActivity extends AppCompatActivity{
         //paid leave days.
         String paidLeaveHours =sharedPreference.loadStringData(context, "PaidLeaveDays");
 
+        if (sharedPreference.loadStringData(context, "PaidLeaveDays") == null){
+            paidLeaveHours = "0일 0시간 0분";
+
+        }
+        String[] hold = paidLeaveHours.split(" ");
+        paidLeaveHours = hold[0];
 
 
         if(militaryNameTv.getText().toString().equals("육군")){
-            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            paidLeaveTv.setText(paidLeaveHours);
             //정해진 휴가일수 측정
             TvTotalReward.setText("포상휴가(총 18): ");
             vacayDurationAMP();
+
         }else if(militaryNameTv.getText().toString().equals("해군")){
-            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가(총 19): ");
             paidLeaveTv.append((" / " + 27 + "일"));
+
         }else if(militaryNameTv.getText().toString().equals("공군")) {
-            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가(총 20): ");
             paidLeaveTv.append((" / " + 29 + "일"));
+
         }else if(militaryNameTv.getText().toString().equals("해병대")) {
-            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가(총 19): ");
             vacayDurationAMP();
+
         }else if(militaryNameTv.getText().toString().equals("의경")) {
-            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가: ");
             vacayDurationAMP();
+
         }else if(militaryNameTv.getText().toString().equals("의무소방")) {
-            paidLeaveTv.setText(paidLeaveHours.substring(0,2));
+            paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가: ");
             paidLeaveTv.append((" / " + 27 + "일"));
+
         }else if(militaryNameTv.getText().toString().equals("사회복무요원")) {
+            paidLeaveHours =sharedPreference.loadStringData(context, "PaidLeaveDays");
+
             paidLeaveTv.setText(paidLeaveHours);
             int tNumPLeaveDays = 15;
             Calendar today = Calendar.getInstance();
@@ -441,6 +455,7 @@ public class ProfileActivity extends AppCompatActivity{
     private void redirectAddFriendsActivity(){
         Intent intent = new Intent(ProfileActivity.this, AddFriendsActivity.class);
         startActivity(intent);
+        finish();
     }
 
 
