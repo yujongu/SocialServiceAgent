@@ -243,8 +243,11 @@ public class EditProfileActivity extends AppCompatActivity {
                     if (ep_paidLeaveDTv.getText().toString().equals("") || ep_EtPaidLeave.getText().toString().equals("")){
                         days = 0;
                     } else {
-                        days = Integer.parseInt(ep_paidLeaveDTv.getText().toString());
-                        days = Integer.parseInt(ep_EtPaidLeave.getText().toString());
+                        if (mTypeSpinner.getSelectedItem().toString().equals("SSA")){
+                            days = Integer.parseInt(ep_paidLeaveDTv.getText().toString());
+                        } else {
+                            days = Integer.parseInt(ep_EtPaidLeave.getText().toString());
+                        }
                     }
                     if (ep_paidLeaveHTv.getText().toString().equals("")){
                         hours = 0;
