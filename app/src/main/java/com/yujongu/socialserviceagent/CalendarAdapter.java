@@ -113,10 +113,6 @@ public class CalendarAdapter extends RecyclerView.Adapter {
                         if (mCalList.get(getAdapterPosition()).isClicked()){ //double selected
 
                             mCalList.get(getAdapterPosition()).getDate();
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(mCalList.get(getAdapterPosition()).getPaidLeave().second);
-                            calendar.get(Calendar.MINUTE);
-
 
                             String dateText = mCalList.get(getAdapterPosition()).getMonth() + "월 " +
                                     mCalList.get(getAdapterPosition()).getDate() + "일";
