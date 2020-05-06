@@ -3,6 +3,7 @@ package com.yujongu.socialserviceagent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,12 @@ public class CalendarAdapter extends RecyclerView.Adapter {
 
     public int selectedDateIndex = -1;
 
+    public ProfileInfo me;
+
     public CalendarAdapter(Context context, ArrayList<Day_Event> calendarList) {
         this.context = context;
         this.mCalList = calendarList;
+
 
         for (int i = 0; i < calendarList.size(); i++){
             if (calendarList.get(i).isClicked() == true){
@@ -116,7 +120,22 @@ public class CalendarAdapter extends RecyclerView.Adapter {
 
                             String dateText = mCalList.get(getAdapterPosition()).getMonth() + "월 " +
                                     mCalList.get(getAdapterPosition()).getDate() + "일";
-                            redirectDayActivity(context, dateText);
+                            String dateLeaved;
+                            try {
+                                Calendar cal1 = Calendar.getInstance();
+                                cal1.setTime(mCalList.get(getAdapterPosition()).getPaidLeave().first);
+
+                                Calendar cal2 = Calendar.getInstance();
+                                cal2.setTime(mCalList.get(getAdapterPosition()).getPaidLeave().second);
+
+
+                                dateLeaved = cal1.get(Calendar.MONTH) + "월 " + cal1.get(Calendar.DATE) + "일 " + cal1.get(Calendar.HOUR) + "시 " + cal1.get(Calendar.MINUTE) + "분 ~ "
+                                        + cal2.get(Calendar.MONTH) + "월 " + cal2.get(Calendar.DATE) + "일 " + cal2.get(Calendar.HOUR) + "시 " + cal2.get(Calendar.MINUTE) + "분";
+                            }catch (NullPointerException e){
+                                dateLeaved = "근무나 서세요^^";
+                            }
+
+                            redirectDayActivity(context, dateText, dateLeaved);
                         } else {
                             for (int i = 0; i < mCalList.size(); i++){
                                 if (mCalList.get(i).isClicked()){
@@ -149,9 +168,10 @@ public class CalendarAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private void redirectDayActivity(Context context, String day){
+    private void redirectDayActivity(Context context, String day, String vacay){
         Intent intent = new Intent(context, DayActivity.class);
         intent.putExtra("Date", day);
+        intent.putExtra("Vacay", vacay);
         context.startActivity(intent);
     }
 }

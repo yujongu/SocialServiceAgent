@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     Map<String, Object> user;
 
-    private ProfileInfo me;
+    public ProfileInfo me;
 
     private TextView progressTv;
     private ProgressBar pbProgress;
@@ -122,6 +122,7 @@ public class ProfileActivity extends AppCompatActivity{
         TvSickLeave = findViewById(R.id.TvSickLeave);
 
 
+
         setProfileInfo();
         if(militaryNameTv.getText().toString().equals("육군")){
             rowSoldier();
@@ -146,6 +147,7 @@ public class ProfileActivity extends AppCompatActivity{
             rowReward.setVisibility(View.GONE);
             rowSpecial.setVisibility(View.GONE);
         }
+
     }
 
     private void eventListeners(){
@@ -181,6 +183,7 @@ public class ProfileActivity extends AppCompatActivity{
 
         //profileName
         profileNameTv.setText(me.getName());
+
 
         //profileImage
         if (me.getPictureUrl().equals("")){
@@ -464,9 +467,6 @@ public class ProfileActivity extends AppCompatActivity{
         startActivity(intent);
         finish();
     }
-
-
-
 
 
 }
