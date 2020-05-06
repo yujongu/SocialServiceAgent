@@ -117,14 +117,14 @@ public class NotificationListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 addFriendIdtoFriendList(userId);
-                removeFriendIdfromRequestList(userId);
+                removeFriendIdfromNotificationList(userId);
             }
         });
 
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeFriendIdfromRequestList(userId);
+                removeFriendIdfromNotificationList(userId);
             }
         });
 
@@ -147,10 +147,11 @@ public class NotificationListAdapter extends BaseAdapter {
                 Log.d(TAG, e.toString());
             }
         });
-
+        DocumentReference friendInfoRef = db.collection("Users").document(newFriend);
+        friendInfoRef.update("Friends List", FieldValue.arrayUnion(sharedPreference.loadStringData(context, "UserId")));
     }
 
-    private void removeFriendIdfromRequestList(String reqFriendId){
+    private void removeFriendIdfromNotificationList(String reqFriendId){
         DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
         myInfoRef.update("Notifications", FieldValue.arrayRemove(reqFriendId)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -164,5 +165,8 @@ public class NotificationListAdapter extends BaseAdapter {
                 Log.d(TAG, e.toString());
             }
         });
+
+        DocumentReference reqPersonRef = db.collection("Users").document(reqFriendId);
+        reqPersonRef.update("Request Lists", FieldValue.arrayRemove(sharedPreference.loadStringData(context, "UserId")));
     }
 }
