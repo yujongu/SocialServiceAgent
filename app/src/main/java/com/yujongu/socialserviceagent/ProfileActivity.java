@@ -289,6 +289,8 @@ public class ProfileActivity extends AppCompatActivity{
             TvSick.setText("병가(총 30): ");
         }
 
+        me.setPaidLeaveDays(paidLeaveHours);
+
         //포상휴가
         if (sharedPreference.loadStringData(context, SP_REWARDDAYS) == null){
             sharedPreference.saveData(context, SP_REWARDDAYS, String.valueOf(me.getRewardDays()));

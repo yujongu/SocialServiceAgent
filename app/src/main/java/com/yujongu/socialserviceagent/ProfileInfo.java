@@ -8,6 +8,8 @@ public class ProfileInfo {
     private MilitaryTypeEnum militaryType;
     private Date startService;
     private Date endService;
+    private int discoutDays;
+    private long totalDays;
     private String paidLeaveDays;
     private int personalLeaveDays;
     private int rewardDays;
@@ -24,6 +26,22 @@ public class ProfileInfo {
         this.rewardDays = 0;
         this.specialDays = 0;
         this.sickDays = 0;
+    }
+
+    public long getTotalDays() {
+        return totalDays;
+    }
+
+    public void setTotalDays(long totalDays) {
+        this.totalDays = totalDays;
+    }
+
+    public int getDiscoutDays() {
+        return discoutDays;
+    }
+
+    public void setDiscoutDays(int discoutDays) {
+        this.discoutDays = discoutDays;
     }
 
     public int getSickDays() {
