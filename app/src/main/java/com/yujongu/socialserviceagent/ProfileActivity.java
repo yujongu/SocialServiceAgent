@@ -275,15 +275,47 @@ public class ProfileActivity extends AppCompatActivity{
             today.add(Calendar.DAY_OF_MONTH, -365);
             //1년 초과 확인
             if (today.getTime().after(me.getStartService())){
-                //2020 3월 2일 이후 소집인지 확인
-                today.set(Calendar.YEAR, 2020);
-                today.set(Calendar.MONTH, 2);
-                today.set(Calendar.DAY_OF_MONTH, 1);
-                if (me.getStartService().after(today.getTime())){
-                    tNumPLeaveDays = 13;
-                } else {
-                    tNumPLeaveDays = 16;
-                }
+                switch (me.getTotalMonths()){
+                    case 24:
+                        tNumPLeaveDays = 16;
+                        break;
+                    case 23:
+                        tNumPLeaveDays = 15;
+                        break;
+                    case 22:
+                        tNumPLeaveDays = 14;
+                        break;
+                    case 21:
+                        tNumPLeaveDays = 13;
+                        break;
+                    case 20:
+                        tNumPLeaveDays = 12;
+                        break;
+                    case 19:
+                        tNumPLeaveDays = 10;
+                        break;
+                    case 18:
+                        tNumPLeaveDays = 9;
+                        break;
+                    case 17:
+                        tNumPLeaveDays = 8;
+                        break;
+                    case 16:
+                        tNumPLeaveDays = 6;
+                        break;
+                    case 15:
+                        tNumPLeaveDays = 5;
+                        break;
+                    case 14:
+                        tNumPLeaveDays = 4;
+                        break;
+                    case 13:
+                        tNumPLeaveDays = 3;
+                        break;
+                    default:
+                        tNumPLeaveDays = 0;
+                        break;
+                }//checks how many months one needs to work total
             }
             paidLeaveTv.append(" / " + tNumPLeaveDays + "일");
             TvSick.setText("병가(총 30): ");
@@ -360,6 +392,17 @@ public class ProfileActivity extends AppCompatActivity{
         long totalDiffMillis = Math.abs(calendar.getTime().getTime() - startDate.getTime());
 
         long totalDiffDays = TimeUnit.DAYS.convert(totalDiffMillis, TimeUnit.MILLISECONDS);
+
+        int totalDiffMonths = -1;
+        while(calendar.getTime().after(startDate)){
+            calendar.add(Calendar.MONTH, -1);
+            totalDiffMonths++;
+        }
+
+
+        me.setTotalMonths(totalDiffMonths);
+        me.setTotalDays(totalDiffDays);
+        me.setDiscoutDays(discountDays);
 
         Log.i("TotalDay", String.valueOf(totalDiffDays));
         totalDaysTv.setText(totalDiffDays + "일");

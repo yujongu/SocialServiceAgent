@@ -10,6 +10,7 @@ public class ProfileInfo {
     private Date endService;
     private int discoutDays;
     private long totalDays;
+    private int totalMonths;
     private String paidLeaveDays;
     private int personalLeaveDays;
     private int rewardDays;
@@ -26,6 +27,14 @@ public class ProfileInfo {
         this.rewardDays = 0;
         this.specialDays = 0;
         this.sickDays = 0;
+    }
+
+    public int getTotalMonths() {
+        return totalMonths;
+    }
+
+    public void setTotalMonths(int totalMonths) {
+        this.totalMonths = totalMonths;
     }
 
     public long getTotalDays() {

@@ -25,6 +25,7 @@ public class ProfileViewPagerActivity extends AppCompatActivity {
 
     Context context;
     private ViewPager viewPager;
+    final static String TAG = "ProfileViewPagerActivityT";
 
     private SharedPreference sharedPreference;
     private FirebaseFirestore db;
@@ -183,7 +184,8 @@ public class ProfileViewPagerActivity extends AppCompatActivity {
 
         long totalDiffDays = TimeUnit.DAYS.convert(totalDiffMillis, TimeUnit.MILLISECONDS);
 
-        Log.i("TotalDay", String.valueOf(totalDiffDays));
+
+
         me.setTotalDays(totalDiffDays);
         me.setDiscoutDays(discountDays);
         return calendar.getTime();
