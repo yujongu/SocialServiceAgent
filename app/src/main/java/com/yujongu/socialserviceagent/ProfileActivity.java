@@ -398,6 +398,7 @@ public class ProfileActivity extends AppCompatActivity{
             calendar.add(Calendar.MONTH, -1);
             totalDiffMonths++;
         }
+        calendar.add(Calendar.MONTH, totalDiffMonths + 1);
 
 
         me.setTotalMonths(totalDiffMonths);
