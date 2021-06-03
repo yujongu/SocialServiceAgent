@@ -4,15 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -25,7 +19,6 @@ import com.yujongu.socialserviceagent.MainActivity;
 import com.yujongu.socialserviceagent.R;
 import com.yujongu.socialserviceagent.SharedPreference;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreference sharedPreference;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     final static String TAG = "LoginActivityT";
     final static String KEY_ID = "UserId";
@@ -141,8 +133,6 @@ public class LoginActivity extends AppCompatActivity {
                     saveUserToCloud(String.valueOf(response.getId()), user);
                 }
 
-
-
                 sharedPreference.saveData(context, "UserId", userId);
                 sharedPreference.saveData(context, "ProfileName", nickname);
                 sharedPreference.saveData(context, "ProfilePicUrl", url);
@@ -152,19 +142,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveUserToCloud(String documentName, Map<String, Object> mapObj){
-        db.collection("Users").document(documentName).set(mapObj, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Fail", Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.toString());
-            }
-        });
+//        db.collection("Users").document(documentName).set(mapObj, SetOptions.merge())
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Fail", Toast.LENGTH_LONG).show();
+//                Log.d(TAG, e.toString());
+//            }
+//        });
     }
 
     private void redirectMainActivity() {

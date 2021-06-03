@@ -14,9 +14,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.kakao.friends.AppFriendContext;
 import com.kakao.friends.AppFriendOrder;
 import com.kakao.friends.response.AppFriendsResponse;
@@ -34,7 +31,6 @@ public class NotificationListAdapter extends BaseAdapter {
 
 
     private SharedPreference sharedPreference;
-    private FirebaseFirestore db;
     Context context;
     ArrayList<String> list;
     String TAG = "NotificationListAdapterT";
@@ -42,7 +38,6 @@ public class NotificationListAdapter extends BaseAdapter {
     public NotificationListAdapter(ArrayList<String> list) {
         this.list = list;
         this.sharedPreference = new SharedPreference();
-        this.db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -134,39 +129,39 @@ public class NotificationListAdapter extends BaseAdapter {
     }
 
     private void addFriendIdtoFriendList(String newFriend){
-        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
-        myInfoRef.update("Friends List", FieldValue.arrayUnion(newFriend)).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(context,"Friend Added!!", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Failed to add friend up on cloud", Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.toString());
-            }
-        });
-        DocumentReference friendInfoRef = db.collection("Users").document(newFriend);
-        friendInfoRef.update("Friends List", FieldValue.arrayUnion(sharedPreference.loadStringData(context, "UserId")));
+//        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
+//        myInfoRef.update("Friends List", FieldValue.arrayUnion(newFriend)).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Toast.makeText(context,"Friend Added!!", Toast.LENGTH_LONG).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Failed to add friend up on cloud", Toast.LENGTH_LONG).show();
+//                Log.d(TAG, e.toString());
+//            }
+//        });
+//        DocumentReference friendInfoRef = db.collection("Users").document(newFriend);
+//        friendInfoRef.update("Friends List", FieldValue.arrayUnion(sharedPreference.loadStringData(context, "UserId")));
     }
 
     private void removeFriendIdfromNotificationList(String reqFriendId){
-        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
-        myInfoRef.update("Notifications", FieldValue.arrayRemove(reqFriendId)).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.toString());
-            }
-        });
-
-        DocumentReference reqPersonRef = db.collection("Users").document(reqFriendId);
-        reqPersonRef.update("Request Lists", FieldValue.arrayRemove(sharedPreference.loadStringData(context, "UserId")));
+//        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
+//        myInfoRef.update("Notifications", FieldValue.arrayRemove(reqFriendId)).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
+//                Log.d(TAG, e.toString());
+//            }
+//        });
+//
+//        DocumentReference reqPersonRef = db.collection("Users").document(reqFriendId);
+//        reqPersonRef.update("Request Lists", FieldValue.arrayRemove(sharedPreference.loadStringData(context, "UserId")));
     }
 }

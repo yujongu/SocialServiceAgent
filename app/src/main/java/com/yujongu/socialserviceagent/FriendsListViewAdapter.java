@@ -15,9 +15,6 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.kakao.friends.response.model.AppFriendInfo;
 import com.squareup.picasso.Picasso;
 
@@ -29,7 +26,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendsListViewAdapter extends BaseAdapter {
     private List<AppFriendInfo> friendsList = new ArrayList<>();
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private SharedPreference sharedPreference = new SharedPreference();
 
     private CircleImageView thumbnailImg;
@@ -95,23 +91,23 @@ public class FriendsListViewAdapter extends BaseAdapter {
     }
 
     private void addFriendRequestDataToCloud(String friendId, final Context context, String myId){
-        DocumentReference myInfoRef = db.collection("Users").document(myId);
-        myInfoRef.update("Request Lists", FieldValue.arrayUnion(friendId));
-        DocumentReference friendInfoRef = db.collection("Users").document(friendId);
-        friendInfoRef.update("Notifications", FieldValue.arrayUnion(myId)).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(context, "Request Sent!!", Toast.LENGTH_LONG).show();
-                friendListAddBtn.setText("Request Sent!");
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Failed to send request...", Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.toString());
-            }
-        });
+//        DocumentReference myInfoRef = db.collection("Users").document(myId);
+//        myInfoRef.update("Request Lists", FieldValue.arrayUnion(friendId));
+//        DocumentReference friendInfoRef = db.collection("Users").document(friendId);
+//        friendInfoRef.update("Notifications", FieldValue.arrayUnion(myId)).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Toast.makeText(context, "Request Sent!!", Toast.LENGTH_LONG).show();
+//                friendListAddBtn.setText("Request Sent!");
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Failed to send request...", Toast.LENGTH_LONG).show();
+//                Log.d(TAG, e.toString());
+//            }
+//        });
     }
 
 }

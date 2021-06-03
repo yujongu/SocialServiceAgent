@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import static com.yujongu.socialserviceagent.ProfileActivity.SP_PIMAGE;
 import static com.yujongu.socialserviceagent.ProfileActivity.SP_PNAME;
@@ -24,7 +21,6 @@ public class DayActivity extends AppCompatActivity {
     TextView leavedTv;
     TextView nameTv;
 
-    private FirebaseFirestore db;
     private SharedPreference sharedPreference;
     private Context context;
     public ProfileInfo me;
@@ -45,7 +41,6 @@ public class DayActivity extends AppCompatActivity {
         leavedTv = findViewById(R.id.tvLeaved);
         nameTv = findViewById(R.id.tvName);
 
-        db = FirebaseFirestore.getInstance();
         sharedPreference = new SharedPreference();
         context = this;
         me = new ProfileInfo(

@@ -19,8 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -424,20 +422,20 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserToCloud(String documentName, Map<String, Object> mapObj){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users").document(documentName).set(mapObj, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Successfully saved to cloud", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Failed to save to cloud", Toast.LENGTH_LONG).show();
-                Log.d(TAG, e.toString());
-            }
-        });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("Users").document(documentName).set(mapObj, SetOptions.merge())
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Toast.makeText(context, "Successfully saved to cloud", Toast.LENGTH_LONG).show();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Failed to save to cloud", Toast.LENGTH_LONG).show();
+//                Log.d(TAG, e.toString());
+//            }
+//        });
     }
 
 }

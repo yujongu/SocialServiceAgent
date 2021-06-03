@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -81,7 +80,6 @@ public class ProfileActivity extends AppCompatActivity{
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
     private SharedPreference sharedPreference;
-    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +93,6 @@ public class ProfileActivity extends AppCompatActivity{
 
     private void initInstances(){
         sharedPreference = new SharedPreference();
-        db = FirebaseFirestore.getInstance();
 
         tablelayout = findViewById(R.id.tablelayout);
 

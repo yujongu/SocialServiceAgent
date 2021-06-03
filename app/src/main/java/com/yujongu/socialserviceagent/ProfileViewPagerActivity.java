@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -28,7 +27,6 @@ public class ProfileViewPagerActivity extends AppCompatActivity {
     final static String TAG = "ProfileViewPagerActivityT";
 
     private SharedPreference sharedPreference;
-    private FirebaseFirestore db;
 
     ArrayList<ProfileInfo> profiles;
 
@@ -59,7 +57,6 @@ public class ProfileViewPagerActivity extends AppCompatActivity {
         profiles = new ArrayList<ProfileInfo>();
 
         sharedPreference = new SharedPreference();
-        db = FirebaseFirestore.getInstance();
     }
 
     private void setMyProfileInfo(){
