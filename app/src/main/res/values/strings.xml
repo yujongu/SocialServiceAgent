@@ -1,11 +1,11 @@
 <resources>
-    <string name = "app_name">SocialServiceAgent</string>
-    <string name = "kakao_app_key">6a18528ddfd74b9e0b0fb9c060118621</string>
-    <string name = "monthDateText">%d월 %d일</string>
-    <string name = "yearMonthText">%d년 %d월</string>
-    <string name = "dateText">%d일</string>
+    <string name="app_name">SocialServiceAgent</string>
+    <string name="kakao_app_key">6a18528ddfd74b9e0b0fb9c060118621</string>
+    <string name="monthDateText">%d월 %d일</string>
+    <string name="yearMonthText">%d년 %d월</string>
+    <string name="dateText">%d일</string>
 
-    <string-array name = "Military_Types">
+    <string-array name="Military_Types">
         <item>Army</item>
         <item>Marine</item>
         <item>Navy</item>
@@ -15,7 +15,7 @@
         <item>Fire</item>
     </string-array>
 
-    <string-array name = "Time_Schedule">
+    <string-array name="Time_Schedule">
         <item>9:00</item>
         <item>9:10</item>
         <item>9:20</item>

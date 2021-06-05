@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -76,10 +77,12 @@ public class ProfileActivity extends AppCompatActivity{
     private TextView TvTotalReward;
     private TextView TvSick;
     private TextView TvSickLeave;
+    private TextView TvPersonalLeave;
 
     final DateFormat df = SimpleDateFormat.getDateInstance(DateFormat.LONG, Locale.KOREA);
 
     private SharedPreference sharedPreference;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     private void initInstances(){
         sharedPreference = new SharedPreference();
+        db = FirebaseFirestore.getInstance();
 
         tablelayout = findViewById(R.id.tablelayout);
 
@@ -109,7 +113,7 @@ public class ProfileActivity extends AppCompatActivity{
         totalDaysTv = findViewById(R.id.TvTotalDays);
         discountDaysTv = findViewById(R.id.TvDiscountDays);
         paidLeaveTv = findViewById(R.id.TvPaidLeave);
-        personalLeaveTv = findViewById(R.id.TvPersonalLeave);
+//        personalLeaveTv = findViewById(R.id.TvPersonalLeave);
         TvPaidReward = findViewById(R.id.TvPaidReward);
         TvPaidSpecial = findViewById(R.id.TvPaidSpecial);
         rowReward = findViewById(R.id.rowReward);
@@ -200,12 +204,14 @@ public class ProfileActivity extends AppCompatActivity{
         militaryNameTv.setText(me.getMilitaryType().getKName());
 
         //personalLeaveDate
+/*
         if (sharedPreference.loadStringData(context, SP_PERSONLEAVEDAYS) == null){
             sharedPreference.saveData(context, SP_PERSONLEAVEDAYS, String.valueOf(me.getPersonalLeaveDays()));
         } else {
             me.setPersonalLeaveDays(Integer.parseInt(sharedPreference.loadStringData(context, SP_PERSONLEAVEDAYS)));
         }
         personalLeaveTv.setText(getString(R.string.dateText, me.getPersonalLeaveDays()));
+        */
 
         //start and end date
         if (sharedPreference.loadStringData(context, SP_STARTDATE) == null){
@@ -235,22 +241,22 @@ public class ProfileActivity extends AppCompatActivity{
         if(militaryNameTv.getText().toString().equals("육군")){
             paidLeaveTv.setText(paidLeaveHours);
             //정해진 휴가일수 측정
-            TvTotalReward.setText("포상휴가(총 18): ");
+            TvTotalReward.setText("포상휴가: ");
             vacayDurationAMP();
 
         }else if(militaryNameTv.getText().toString().equals("해군")){
             paidLeaveTv.setText(paidLeaveHours);
-            TvTotalReward.setText("포상휴가(총 19): ");
+            TvTotalReward.setText("포상휴가: ");
             paidLeaveTv.append((" / " + 27 + "일"));
 
         }else if(militaryNameTv.getText().toString().equals("공군")) {
             paidLeaveTv.setText(paidLeaveHours);
-            TvTotalReward.setText("포상휴가(총 20): ");
+            TvTotalReward.setText("포상휴가: ");
             paidLeaveTv.append((" / " + 29 + "일"));
 
         }else if(militaryNameTv.getText().toString().equals("해병대")) {
             paidLeaveTv.setText(paidLeaveHours);
-            TvTotalReward.setText("포상휴가(총 19): ");
+            TvTotalReward.setText("포상휴: ");
             vacayDurationAMP();
 
         }else if(militaryNameTv.getText().toString().equals("의경")) {
@@ -272,50 +278,18 @@ public class ProfileActivity extends AppCompatActivity{
             today.add(Calendar.DAY_OF_MONTH, -365);
             //1년 초과 확인
             if (today.getTime().after(me.getStartService())){
-                switch (me.getTotalMonths()){
-                    case 24:
-                        tNumPLeaveDays = 16;
-                        break;
-                    case 23:
-                        tNumPLeaveDays = 15;
-                        break;
-                    case 22:
-                        tNumPLeaveDays = 14;
-                        break;
-                    case 21:
-                        tNumPLeaveDays = 13;
-                        break;
-                    case 20:
-                        tNumPLeaveDays = 12;
-                        break;
-                    case 19:
-                        tNumPLeaveDays = 10;
-                        break;
-                    case 18:
-                        tNumPLeaveDays = 9;
-                        break;
-                    case 17:
-                        tNumPLeaveDays = 8;
-                        break;
-                    case 16:
-                        tNumPLeaveDays = 6;
-                        break;
-                    case 15:
-                        tNumPLeaveDays = 5;
-                        break;
-                    case 14:
-                        tNumPLeaveDays = 4;
-                        break;
-                    case 13:
-                        tNumPLeaveDays = 3;
-                        break;
-                    default:
-                        tNumPLeaveDays = 0;
-                        break;
-                }//checks how many months one needs to work total
+                //2020 3월 2일 이후 소집인지 확인
+                today.set(Calendar.YEAR, 2020);
+                today.set(Calendar.MONTH, 2);
+                today.set(Calendar.DAY_OF_MONTH, 1);
+                if (me.getStartService().after(today.getTime())){
+                    tNumPLeaveDays = 13;
+                } else {
+                    tNumPLeaveDays = 16;
+                }
             }
             paidLeaveTv.append(" / " + tNumPLeaveDays + "일");
-            TvSick.setText("병가(총 30): ");
+            TvSick.setText("병가: ");
         }
 
         me.setPaidLeaveDays(paidLeaveHours);
@@ -389,18 +363,6 @@ public class ProfileActivity extends AppCompatActivity{
         long totalDiffMillis = Math.abs(calendar.getTime().getTime() - startDate.getTime());
 
         long totalDiffDays = TimeUnit.DAYS.convert(totalDiffMillis, TimeUnit.MILLISECONDS);
-
-        int totalDiffMonths = -1;
-        while(calendar.getTime().after(startDate)){
-            calendar.add(Calendar.MONTH, -1);
-            totalDiffMonths++;
-        }
-        calendar.add(Calendar.MONTH, totalDiffMonths + 1);
-
-
-        me.setTotalMonths(totalDiffMonths);
-        me.setTotalDays(totalDiffDays);
-        me.setDiscoutDays(discountDays);
 
         Log.i("TotalDay", String.valueOf(totalDiffDays));
         totalDaysTv.setText(totalDiffDays + "일");
@@ -494,7 +456,7 @@ public class ProfileActivity extends AppCompatActivity{
 
 
     private void redirectMainActivity(){
-        Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+        Intent intent = new Intent(ProfileActivity.this, com.yujongu.socialserviceagent.MainActivity.class);
         startActivity(intent);
         finish();
     }

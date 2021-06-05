@@ -26,6 +26,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private SharedPreference sharedPreference;
+    private FirebaseFirestore db;
 
 
     private String TAG = "MainActivityT";
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private void initInstances(){
         context = this;
         sharedPreference = new SharedPreference();
+        db = FirebaseFirestore.getInstance();
         prevMonthBtn = findViewById(R.id.btnPrevMonth);
         nextMonthBtn = findViewById(R.id.btnNextMonth);
         currMonthTv = findViewById(R.id.tvCurrMonth);
@@ -140,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             Day_Event day;
             if (
                     (i < calendar.get(Calendar.DAY_OF_WEEK) - 1) ||
-                    (i > calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + calendar.get(Calendar.DAY_OF_WEEK) - 2)
+                            (i > calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + calendar.get(Calendar.DAY_OF_WEEK) - 2)
             ){
                 day = new Day_Event(1);
                 mCalendarData.add(day);
@@ -258,7 +265,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btnU:
-                    showPopupWindow(view, PAID);
+                    Intent intent = new Intent(getApplicationContext(), SetVacayActivity.class);
+                    startActivity(intent);
+                    //showPopupWindow(view, PAID);
                     triggerBtnVisible();
                     break;
             }
@@ -391,72 +400,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void retrieveData(){
-//        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
-//        myInfoRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isComplete()){
-//                    DocumentSnapshot doc = task.getResult();
-//                    if (doc != null){
-//                        if (doc.get(PAIDLEAVE) != null){
-//                            List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
-//                            for (int i = 0; i < pairList.size(); i++){
-//                                Log.i("TEST4", ((Timestamp) pairList.get(i).get("first")).toDate().toString());
-//                                Calendar cal = Calendar.getInstance();
-//                                cal.setTime(((Timestamp) pairList.get(i).get("first")).toDate());
-//                                int year = cal.get(Calendar.YEAR);
-//                                int month = cal.get(Calendar.MONTH) + 1;
-//                                int date = cal.get(Calendar.DATE);
-//                                Log.i(TAG, year + " " + month + " " + date);
-//                                for (Day_Event day : mCalendarData){
-//                                    if (day.getYear() == year && day.getMonth() == month && day.getDate() == date){
-//                                        day.setPaidLeave(new Pair<Date, Date>(((Timestamp) pairList.get(i).get("first")).toDate(), ((Timestamp) pairList.get(i).get("second")).toDate()));
-//                                    }
-//                                }
-//                                mCalendarAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    } else {
-//                        Log.d(TAG, "No Document Found");
-//                    }
-//                } else {
-//                    Log.d(TAG, "get failed with ", task.getException());
-//                }
-//            }
-//        });
+        DocumentReference myInfoRef = db.collection("Users").document(sharedPreference.loadStringData(context, "UserId"));
+        myInfoRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isComplete()){
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc != null){
+                        if (doc.get(PAIDLEAVE) != null){
+                            List<HashMap> pairList = (List<HashMap>) doc.get(PAIDLEAVE);
+                            for (int i = 0; i < pairList.size(); i++){
+                                Log.i("TEST4", ((Timestamp) pairList.get(i).get("first")).toDate().toString());
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTime(((Timestamp) pairList.get(i).get("first")).toDate());
+                                int year = cal.get(Calendar.YEAR);
+                                int month = cal.get(Calendar.MONTH) + 1;
+                                int date = cal.get(Calendar.DATE);
+                                Log.i(TAG, year + " " + month + " " + date);
+                                for (Day_Event day : mCalendarData){
+                                    if (day.getYear() == year && day.getMonth() == month && day.getDate() == date){
+                                        day.setPaidLeave(new Pair<Date, Date>(((Timestamp) pairList.get(i).get("first")).toDate(), ((Timestamp) pairList.get(i).get("second")).toDate()));
+                                    }
+                                }
+                                mCalendarAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "No Document Found");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
     //todo what happens when the device is offline?
     private void addLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){
-//        DocumentReference myInfoRef = db.collection("Users").document(documentName);
-//        myInfoRef.update(field, FieldValue.arrayUnion(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
-//                Log.d(TAG, e.toString());
-//            }
-//        });
-//        mCalendarAdapter.notifyDataSetChanged();
+        DocumentReference myInfoRef = db.collection("Users").document(documentName);
+        myInfoRef.update(field, FieldValue.arrayUnion(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
+            }
+        });
+        mCalendarAdapter.notifyDataSetChanged();
     }
 
     private void removeLeaveDataToCloud(String documentName, String field, Pair<Date, Date> element){
-//        DocumentReference myInfoRef = db.collection("Users").document(documentName);
-//        myInfoRef.update(field, FieldValue.arrayRemove(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
-//                Log.d(TAG, e.toString());
-//            }
-//        });
+        DocumentReference myInfoRef = db.collection("Users").document(documentName);
+        myInfoRef.update(field, FieldValue.arrayRemove(element)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context,"Successfully updated the leave to cloud", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed to update the leave to cloud", Toast.LENGTH_LONG).show();
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 
     private void triggerBtnVisible(){

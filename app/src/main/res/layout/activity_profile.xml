@@ -254,7 +254,7 @@
 
         </TableRow>
         <TableRow android:id="@+id/rowSpecial"
-         android:paddingVertical="5dp">
+            android:paddingVertical="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -265,15 +265,15 @@
 
                 />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textAlignment="viewEnd"
-                    android:id="@+id/TvPaidSpecial"
-                    android:textColor="@android:color/background_dark"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textAlignment="viewEnd"
+                android:id="@+id/TvPaidSpecial"
+                android:textColor="@android:color/background_dark"
 
-                    />
+                />
 
         </TableRow>
         <TableRow android:paddingVertical="5dp">
@@ -292,27 +292,6 @@
                 android:textSize="16sp"
                 android:textAlignment="viewEnd"
                 android:id="@+id/TvSickLeave"
-                android:textColor="@android:color/background_dark"
-
-                />
-
-        </TableRow>
-        <TableRow android:paddingVertical="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="복무연장일수: "
-                android:textSize="16sp"
-                android:textColor="@android:color/background_dark"
-
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textAlignment="viewEnd"
-                android:id="@+id/TvPersonalLeave"
                 android:textColor="@android:color/background_dark"
 
                 />

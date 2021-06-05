@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetVacayActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="휴가시간 추가"
+            android:textAlignment="center"
+            android:layout_marginTop="10pt"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/black">
+        </TextView>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:padding="16dp">
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkbox_paid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="연가"
+                    android:buttonTint="@color/colorPrimary"/>
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/paidRowS"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/paidDateTextS"
+                    android:text="출발일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발일"
+                    android:id="@+id/paidDateBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/paidDateTextE"
+                    android:text="복귀일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀일"
+                    android:id="@+id/paidDateBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/paidRowE"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/paidTimeTextS"
+                    android:text="출발시간"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발시"
+                    android:id="@+id/paidTimeBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/paidTimeTextE"
+                    android:text="복귀시간"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀시"
+                    android:id="@+id/paidTimeBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkbox_reward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="포상"
+                    android:buttonTint="@color/colorPrimary"/>
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/rewardRowS"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rewardDateTextS"
+                    android:text="출발일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발일"
+                    android:id="@+id/rewardDateBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rewardDateTextE"
+                    android:text="복귀일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀일"
+                    android:id="@+id/rewardDateBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/rewardRowE"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rewardTimeTextS"
+                    android:text="출발시간"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발시"
+                    android:id="@+id/rewardTimeBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rewardTimeTextE"
+                    android:text="복귀시간"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀시"
+                    android:id="@+id/rewardTimeBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkbox_special"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="위로"
+                    android:buttonTint="@color/colorPrimary"/>
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/specialRowS"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/specialDateTextS"
+                    android:text="출발일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발일"
+                    android:id="@+id/specialDateBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/specialDateTextE"
+                    android:text="복귀일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀일"
+                    android:id="@+id/specialDateBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/specialRowE"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/specialTimeTextS"
+                    android:text="출발시간"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발시"
+                    android:id="@+id/specialTimeBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/specialTimeTextE"
+                    android:text="복귀시간"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀시"
+                    android:id="@+id/specialTimeBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp">
+
+                <CheckBox
+                    android:id="@+id/checkbox_sick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="병가 (청원)"
+                    android:buttonTint="@color/colorPrimary"/>
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/sickRowS"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sickDateTextS"
+                    android:text="출발일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발일"
+                    android:id="@+id/sickDateBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sickDateTextE"
+                    android:text="복귀일자"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀일"
+                    android:id="@+id/sickDateBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+            </TableRow>
+
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="5dp"
+                android:weightSum="10"
+                android:id="@+id/sickRowE"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sickTimeTextS"
+                    android:text="출발시간"
+                    android:textAlignment="center"
+                    android:layout_weight="3"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="출발시"
+                    android:id="@+id/sickTimeBtnS"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sickTimeTextE"
+                    android:text="복귀시간"
+                    android:layout_weight="3"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="복귀시"
+                    android:id="@+id/sickTimeBtnE"
+                    android:layout_weight="2"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimaryLight"/>
+
+
+
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+
+</ScrollView>
