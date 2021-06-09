@@ -11,16 +11,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="휴가 추가"
-            android:textAlignment="center"
-            android:layout_marginTop="10pt"
-            android:textSize="20sp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@android:color/black">
-        </TextView>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="휴가 추가"
+                android:textAlignment="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10pt"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/title_page">
+            </TextView>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10pt"
+                android:layout_marginBottom="10dp"
+                android:layout_centerVertical="true"
+                android:text="시간선택"
+                android:textColor="@android:color/white"
+                android:background="@color/colorPrimaryLight"
+                android:textSize="15sp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/pickTime_id"/>
+
+        </RelativeLayout>
 
         <TableLayout
             android:layout_width="match_parent"
@@ -35,7 +58,7 @@
 
                 <CheckBox
                     android:id="@+id/checkbox_paid"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="연가"
                     android:buttonTint="@color/colorPrimary"/>
@@ -63,7 +86,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="출발"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
 
                 <TextView
@@ -82,7 +106,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="도착"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
             </TableRow>
 
@@ -120,7 +145,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="출발"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
 
                 <TextView
@@ -139,7 +165,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="도착"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
             </TableRow>
 
@@ -177,7 +204,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="출발"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
 
                 <TextView
@@ -196,7 +224,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="도착"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
             </TableRow>
 
@@ -234,7 +263,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="출발"
                     android:textAlignment="center"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
 
                 <TextView
@@ -253,7 +283,8 @@
                     android:background="@color/colorPrimaryLight"
                     android:text="도착"
                     android:textAlignment="center"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    android:textColor="@android:color/white"/>
 
             </TableRow>
 
@@ -261,12 +292,12 @@
                 android:layout_marginVertical="20dp">
 
                 <Button
-                    android:id="@+id/pickTime_id"
+                    android:id="@+id/confirmButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="시간으로 설정하기"
-                    android:textSize="15sp"
-                    android:padding="20dp"
+                    android:text="저장"
+                    android:textSize="20sp"
+                    android:padding="15dp"
                     android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
                     android:layout_weight="1"/>

@@ -438,8 +438,21 @@
                     android:textColor="@android:color/black"
                     android:background="@color/colorPrimaryLight"/>
 
+            </TableRow>
 
+            <TableRow android:paddingVertical="5dp"
+                android:layout_marginVertical="20dp">
 
+                <Button
+                    android:id="@+id/confirmButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="저장"
+                    android:textSize="20sp"
+                    android:padding="15dp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"
+                    android:layout_weight="1"/>
             </TableRow>
 
         </TableLayout>

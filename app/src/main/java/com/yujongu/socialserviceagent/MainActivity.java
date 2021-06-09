@@ -117,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
         mCalendarAdapter = new CalendarAdapter(this, mCalendarData);
         mRecyclerView.setAdapter(mCalendarAdapter);
 
-
+/*
         lBtn = findViewById(R.id.btnL);
         cBtn = findViewById(R.id.btnC);
         uBtn = findViewById(R.id.btnU);
-
+*/
     }
 
     private void eventListeners(){
@@ -130,10 +130,11 @@ public class MainActivity extends AppCompatActivity {
         nextMonthBtn.setOnClickListener(listener);
         findTodayBtn.setOnClickListener(listener);
         addEventBtn.setOnClickListener(listener);
+        /*
         lBtn.setOnClickListener(listener);
         cBtn.setOnClickListener(listener);
         uBtn.setOnClickListener(listener);
-
+*/
         mRecyclerView.setHasFixedSize(true);
 
     }
@@ -251,9 +252,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btnAddEvent:
-                    triggerBtnVisible();
+                    Intent intent = new Intent(getApplicationContext(), SetVacayActivity.class);
+                    startActivity(intent);
+             //      triggerBtnVisible();
                     break;
 
+                    /*
                 case R.id.btnL:
                     showPopupWindow(view, PERSONAL);
                     triggerBtnVisible();
@@ -265,11 +269,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.btnU:
-                    Intent intent = new Intent(getApplicationContext(), SetVacayActivity.class);
-                    startActivity(intent);
-                    //showPopupWindow(view, PAID);
+
+                    showPopupWindow(view, PAID);
                     triggerBtnVisible();
                     break;
+
+                     */
             }
         }
     };
@@ -467,7 +472,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+/*
     private void triggerBtnVisible(){
         if (uBtn.getVisibility() != View.VISIBLE){
             uBtn.setVisibility(View.VISIBLE);
@@ -479,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
             lBtn.setVisibility(View.GONE);
         }
     }
-
+*/
     private void redirectProfileActivity(){
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
         startActivity(intent);

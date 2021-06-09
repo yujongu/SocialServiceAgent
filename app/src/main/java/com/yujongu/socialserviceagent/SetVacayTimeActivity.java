@@ -2,6 +2,7 @@ package com.yujongu.socialserviceagent;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
     TableRow paidRowS, paidRowE, rewardRowS, rewardRowE, specialRowS, specialRowE, sickRowS, sickRowE;
     private CheckBox paidCheck, rewardCheck, specialCheck, sickCheck;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    Button confirm_Btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,8 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
         sickRowS = findViewById(R.id.sickRowS);
         sickRowE = findViewById(R.id.sickRowE);
 
+        confirm_Btn = findViewById(R.id.confirmButton);
+
         paidCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -151,6 +155,15 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
                     sickRowS.setVisibility(View.GONE);
                     sickRowE.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        confirm_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SetVacayTimeActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -393,5 +406,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
                     }, mHour, mMinute, true);
             timePickerDialog.show();
         }
+
+
     }
 }

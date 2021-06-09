@@ -139,7 +139,7 @@
             android:scrollbars="vertical" />
     </LinearLayout>
 
-
+<!---
     <ImageButton
         android:layout_width = "50dp"
         android:layout_height = "50dp"
@@ -175,7 +175,7 @@
         android:layout_toStartOf="@id/btnAddEvent"
         android:visibility="gone"
         android:id="@+id/btnL"/>
-
+-->
     <ImageButton
         android:layout_width = "50dp"
         android:layout_height = "50dp"

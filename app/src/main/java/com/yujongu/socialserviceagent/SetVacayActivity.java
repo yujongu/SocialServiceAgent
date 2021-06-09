@@ -31,7 +31,7 @@ public class SetVacayActivity extends Activity {
             startSpecialDate, endSpecialDate, startSickDate, endSickDate;
     private CheckBox paidCheck, rewardCheck, specialCheck, sickCheck;
     private TableRow paidRow, rewardRow, specialRow, sickRow;
-    private Button timePick_Btn;
+    private Button timePick_Btn, confirm_Btn;
 
     static final int DATE_DIALOG_ID = 0;
 
@@ -58,6 +58,8 @@ public class SetVacayActivity extends Activity {
         startSickDate = Calendar.getInstance();
 
         timePick_Btn = findViewById(R.id.pickTime_id);
+        confirm_Btn = findViewById(R.id.confirmButton);
+
         paidCheck = findViewById(R.id.checkbox_paid);
         rewardCheck = findViewById(R.id.checkbox_reward);
         specialCheck = findViewById(R.id.checkbox_special);
@@ -137,6 +139,15 @@ public class SetVacayActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SetVacayActivity.this, SetVacayTimeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        confirm_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SetVacayActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
