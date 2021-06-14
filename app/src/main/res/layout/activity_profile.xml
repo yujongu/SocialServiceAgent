@@ -164,47 +164,31 @@
                 />
 
         </TableRow>
-        <TableRow android:paddingVertical="5dp">
+
+        <TableRow
+            android:layout_height="20dp"
+            android:paddingVertical="5dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="의무복무일수: "
-                android:textSize="16sp"
                 android:textColor="@android:color/background_dark"
+                android:textSize="16sp"
 
                 />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textAlignment="viewEnd"
                 android:id="@+id/TvTotalDays"
-                android:textColor="@android:color/background_dark"
-
-                />
-        </TableRow>
-        <TableRow android:paddingVertical="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="감소일수: "
-                android:textSize="16sp"
-                android:textColor="@android:color/background_dark"
-                />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:textAlignment="viewEnd"
-                android:id="@+id/TvDiscountDays"
                 android:textColor="@android:color/background_dark"
+                android:textSize="16sp"
 
                 />
-
         </TableRow>
+
         <TableRow android:paddingVertical="5dp">
 
             <TextView

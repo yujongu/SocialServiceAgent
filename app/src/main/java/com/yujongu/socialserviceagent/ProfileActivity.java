@@ -111,7 +111,6 @@ public class ProfileActivity extends AppCompatActivity{
         startingDateTv = findViewById(R.id.selectedStartingDate);
         endingDateTv = findViewById(R.id.TvEndingDate);
         totalDaysTv = findViewById(R.id.TvTotalDays);
-        discountDaysTv = findViewById(R.id.TvDiscountDays);
         paidLeaveTv = findViewById(R.id.TvPaidLeave);
 //        personalLeaveTv = findViewById(R.id.TvPersonalLeave);
         TvPaidReward = findViewById(R.id.TvPaidReward);
@@ -164,13 +163,8 @@ public class ProfileActivity extends AppCompatActivity{
     }
 
     private void vacayDurationAMP(){
-        if(Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))>45 && Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))<76){
-            paidLeaveTv.append((" / " + 26 + "일"));
-        }else if(Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))>75 && Integer.parseInt(discountDaysTv.getText().toString().substring(0,2))<90) {
-            paidLeaveTv.append((" / " + 25 + "일"));
-        }else{
-            paidLeaveTv.append((" / " + 24 + "일"));
-        }
+
+
     }
 
     private void setProfileInfo(){
@@ -242,7 +236,7 @@ public class ProfileActivity extends AppCompatActivity{
             paidLeaveTv.setText(paidLeaveHours);
             //정해진 휴가일수 측정
             TvTotalReward.setText("포상휴가: ");
-            vacayDurationAMP();
+            paidLeaveTv.append((" / " + 24 + "일"));
 
         }else if(militaryNameTv.getText().toString().equals("해군")){
             paidLeaveTv.setText(paidLeaveHours);
@@ -252,17 +246,17 @@ public class ProfileActivity extends AppCompatActivity{
         }else if(militaryNameTv.getText().toString().equals("공군")) {
             paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가: ");
-            paidLeaveTv.append((" / " + 29 + "일"));
+            paidLeaveTv.append((" / " + 28 + "일"));
 
         }else if(militaryNameTv.getText().toString().equals("해병대")) {
             paidLeaveTv.setText(paidLeaveHours);
-            TvTotalReward.setText("포상휴: ");
-            vacayDurationAMP();
+            TvTotalReward.setText("포상휴가: ");
+            paidLeaveTv.append((" / " + 24 + "일"));
 
         }else if(militaryNameTv.getText().toString().equals("의경")) {
             paidLeaveTv.setText(paidLeaveHours);
             TvTotalReward.setText("포상휴가: ");
-            vacayDurationAMP();
+            paidLeaveTv.append((" / " + 24 + "일"));
 
         }else if(militaryNameTv.getText().toString().equals("의무소방")) {
             paidLeaveTv.setText(paidLeaveHours);
@@ -339,25 +333,10 @@ public class ProfileActivity extends AppCompatActivity{
 
         long diff = TimeUnit.DAYS.convert(diffMillis, TimeUnit.MILLISECONDS);
 
-        int discountDays = 0;
-        if (militaryTypeEnum == MilitaryTypeEnum.AIRFORCE){
-            if ((diff / 14) + 1 <= 60){
-                discountDays = (int) (diff / 14 + 1);
-            } else {
-                discountDays = 60;
-            }
-        } else {
-            if ((diff / 14) + 1 <= 90){
-                discountDays = (int) (diff / 14 + 1);
-            } else {
-                discountDays = 90;
-            }
-        }
 
         calendar.setTime(startDate);
 
         calendar.add(Calendar.MONTH, militaryTypeEnum.getValue());
-        calendar.add(Calendar.DATE, (-discountDays));
         calendar.add(Calendar.DATE, -1);
 
         long totalDiffMillis = Math.abs(calendar.getTime().getTime() - startDate.getTime());
@@ -366,7 +345,6 @@ public class ProfileActivity extends AppCompatActivity{
 
         Log.i("TotalDay", String.valueOf(totalDiffDays));
         totalDaysTv.setText(totalDiffDays + "일");
-        discountDaysTv.setText(discountDays + "일");
         return calendar.getTime();
     }
 
@@ -393,7 +371,7 @@ public class ProfileActivity extends AppCompatActivity{
             case "SSA":
                 return MilitaryTypeEnum.SSA;
             default:
-                return MilitaryTypeEnum.SSA;
+                return MilitaryTypeEnum.ARMY;
         }
     }
 

@@ -1,10 +1,10 @@
 package com.yujongu.socialserviceagent;
 
 public enum MilitaryTypeEnum {
-    ARMY("Army","육군", 21, 0), MARINE("Marien", "해병대", 21, 1),
-    NAVY("Navy", "해군", 23, 2), AIRFORCE("Airforce", "공군", 24, 3),
-    POLICE("Police", "의경", 21, 4), SSA("SSA", "사회복무요원", 24,5 ),
-    FIRE("Fire", "의무소방", 23, 6);
+    ARMY("Army","육군", 18, 0), MARINE("Marien", "해병대", 18, 1),
+    NAVY("Navy", "해군", 20, 2), AIRFORCE("Airforce", "공군", 21, 3),
+    POLICE("Police", "의경", 18, 4), SSA("SSA", "사회복무요원", 21,5 ),
+    FIRE("Fire", "의무소방", 20, 6);
 
     private int value;
     private String kName;
