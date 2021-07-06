@@ -294,11 +294,12 @@ public class EditProfileActivity extends AppCompatActivity {
                     int month = cal.get(Calendar.MONTH);
                     int date = cal.get(Calendar.DATE);
 
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(EditProfileActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(EditProfileActivity.this, R.style.DatePickerDialogTheme, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker datePicker, int nYear, int nMonth, int nDate) {
 
                             Calendar calendar = new GregorianCalendar(nYear, nMonth, nDate);
+
                             ep_startingDateTv.setText(df.format(calendar.getTime()));
                         }
                     }, year, month, date);

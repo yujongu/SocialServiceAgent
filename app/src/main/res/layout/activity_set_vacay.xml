@@ -4,46 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SetVacayActivity">
+    tools:context=".SetVacayActivity"
+    android:layout_marginTop="10dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:id="@+id/topics">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="휴가 추가"
-                android:textAlignment="center"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
+                android:textAlignment="viewStart"
+                android:paddingLeft="16dp"
                 android:layout_marginTop="10pt"
                 android:textSize="20sp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@android:color/black"
-                android:id="@+id/title_page">
+                android:fontFamily="@font/spoqa_bold">
             </TextView>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="10pt"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15pt"
                 android:layout_centerVertical="true"
                 android:text="시간선택"
-                android:textColor="@android:color/white"
-                android:background="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimaryLight"
+                android:background="@null"
                 android:textSize="15sp"
                 android:layout_marginRight="10dp"
                 android:id="@+id/pickTime_id"/>
 
         </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:layout_below="@id/topics">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -61,7 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="연가"
-                    android:buttonTint="@color/colorPrimary"/>
+                    android:buttonTint="@color/colorPrimary"
+                    android:fontFamily="@font/spoqa_medium"/>
             </TableRow>
 
 
@@ -77,7 +84,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/paidbuttonS_id"
@@ -87,7 +95,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
 
                 <TextView
@@ -97,7 +106,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/paidbuttonE_id"
@@ -107,7 +117,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
             </TableRow>
 
@@ -136,7 +147,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/rewardbuttonS_id"
@@ -146,7 +158,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
 
                 <TextView
@@ -156,7 +169,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/rewardbuttonE_id"
@@ -166,7 +180,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
             </TableRow>
 
@@ -179,13 +194,14 @@
                     android:layout_height="wrap_content"
                     android:text="위로"
                     android:layout_weight="3"
-                    android:buttonTint="@color/colorPrimary"/>
+                    android:buttonTint="@color/colorPrimary"
+                    android:fontFamily="@font/spoqa_medium"/>
             </TableRow>
 
 
             <TableRow android:paddingVertical="5dp"
                 android:layout_marginVertical="5dp"
-                android:weightSum="8"
+                android:weightSum="10"
                 android:id="@+id/specialRow"
                 android:visibility="gone">
                 <TextView
@@ -195,7 +211,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/specialbuttonS_id"
@@ -205,7 +222,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
 
                 <TextView
@@ -215,7 +233,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/specialbuttonE_id"
@@ -225,7 +244,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
             </TableRow>
 
@@ -238,7 +258,8 @@
                     android:layout_height="wrap_content"
                     android:text="청원"
                     android:layout_weight="3"
-                    android:buttonTint="@color/colorPrimary"/>
+                    android:buttonTint="@color/colorPrimary"
+                    android:fontFamily="@font/spoqa_medium"/>
             </TableRow>
 
 
@@ -254,7 +275,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/sickbuttonS_id"
@@ -264,7 +286,8 @@
                     android:text="출발"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
 
                 <TextView
@@ -274,7 +297,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:fontFamily="@font/spoqa_regular"/>
 
                 <Button
                     android:id="@+id/sickbuttonE_id"
@@ -284,7 +308,8 @@
                     android:text="도착"
                     android:textAlignment="center"
                     android:layout_weight="2"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"/>
 
             </TableRow>
 
@@ -300,13 +325,16 @@
                     android:padding="15dp"
                     android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
+                    android:fontFamily="@font/spoqa_medium"
                     android:layout_weight="1"/>
             </TableRow>
 
 
 
+
         </TableLayout>
 
-    </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
 
-</RelativeLayout>
+    </RelativeLayout>

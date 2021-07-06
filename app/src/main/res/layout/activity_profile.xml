@@ -18,7 +18,10 @@
             android:id="@+id/timeLeftPb"
             android:max="1000000"
             android:progress="0"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:indeterminateTint="@color/colorPrimary"
+            android:progressTint="@color/colorPrimary"
+            />
 
         <TextView
             android:layout_width = "wrap_content"
@@ -29,7 +32,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
             tools:ignore = "RelativeOverlap"
-            android:layout_marginTop="40dp"/>
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/spoqa_regular"
+            android:textColor="@android:color/black"/>
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -51,6 +56,8 @@
         android:textSize="26sp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/spoqa_medium"
         />
 
     <ImageButton
@@ -83,7 +90,10 @@
             android:layout_marginEnd="4dp"
             android:text="프로필 수정"
             android:background="@drawable/button_background_cornerless"
-            android:id="@+id/btnEditProfile"/>
+            android:id="@+id/btnEditProfile"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/spoqa_medium"
+            android:textSize="15sp"/>
 
         <Button
             android:layout_weight="1"
@@ -93,7 +103,9 @@
             android:text="친구 추가"
             android:background="@drawable/button_background_cornerless"
             android:id="@+id/btnAddFriend"
-            />
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/spoqa_medium"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -118,6 +130,7 @@
                 android:textAlignment="viewEnd"
                 android:textColor="@android:color/background_dark"
                 android:paddingVertical="7dp"
+                android:fontFamily="@font/spoqa_medium"
                 />
 
         </TableRow>
@@ -129,7 +142,7 @@
                 android:text="복무시작일: "
                 android:textSize="16sp"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
             <TextView
@@ -139,7 +152,7 @@
                 android:textAlignment="viewEnd"
                 android:id="@+id/selectedStartingDate"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_regular"
                 />
 
         </TableRow>
@@ -150,7 +163,7 @@
                 android:text="전역일: "
                 android:textSize="16sp"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
             <TextView
@@ -160,7 +173,7 @@
                 android:textAlignment="viewEnd"
                 android:id="@+id/TvEndingDate"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_regular"
                 />
 
         </TableRow>
@@ -175,7 +188,7 @@
                 android:text="의무복무일수: "
                 android:textColor="@android:color/background_dark"
                 android:textSize="16sp"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
             <TextView
@@ -185,7 +198,7 @@
                 android:textAlignment="viewEnd"
                 android:textColor="@android:color/background_dark"
                 android:textSize="16sp"
-
+                android:fontFamily="@font/spoqa_regular"
                 />
         </TableRow>
 
@@ -198,7 +211,7 @@
                 android:id="@+id/TvTotalVacay"
                 android:text="연가일수:"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
 
@@ -221,7 +234,7 @@
                 android:textSize="16sp"
                 android:id="@+id/TvTotalReward"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
 
@@ -233,7 +246,7 @@
                 android:textAlignment="viewEnd"
                 android:id="@+id/TvPaidReward"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_regular"
                 />
 
         </TableRow>
@@ -246,7 +259,7 @@
                 android:text="위로휴가: "
                 android:textSize="16sp"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
             <TextView
@@ -256,7 +269,7 @@
                 android:textAlignment="viewEnd"
                 android:id="@+id/TvPaidSpecial"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_regular"
                 />
 
         </TableRow>
@@ -267,7 +280,7 @@
                 android:textSize="16sp"
                 android:id="@+id/TvSick"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_medium"
                 />
 
             <TextView
@@ -277,7 +290,7 @@
                 android:textAlignment="viewEnd"
                 android:id="@+id/TvSickLeave"
                 android:textColor="@android:color/background_dark"
-
+                android:fontFamily="@font/spoqa_regular"
                 />
 
         </TableRow>

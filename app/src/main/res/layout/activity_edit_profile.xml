@@ -6,7 +6,7 @@
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     tools:context = ".EditProfileActivity"
-    android:padding="10dp">
+    android:padding="16dp">
 
     <RelativeLayout
         android:layout_width = "match_parent"
@@ -15,16 +15,24 @@
         <Button
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:text="cancel"
+            android:text="취소"
             android:id="@+id/btnCancel"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:background="@null"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/spoqa_medium"
+            android:textSize="16sp"/>
 
         <Button
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:text="Save"
+            android:text="저장"
             android:id="@+id/btnSave"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/spoqa_medium"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <ScrollView
@@ -53,6 +61,8 @@
                 android:textSize="26sp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:textColor="@android:color/background_dark"
+                android:fontFamily="@font/spoqa_medium"
                 />
 
             <LinearLayout
@@ -66,7 +76,9 @@
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
-                    android:text="복무 제도"/>
+                    android:text="복무 제도"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"/>
 
                 <RelativeLayout
                     android:layout_width = "match_parent"
@@ -85,40 +97,48 @@
                         android:id="@+id/ep_TvMilitaryName"
                         android:textSize="16sp"
                         android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/spoqa_regular"
+                        android:textColor="@android:color/background_dark"
                         />
                 </RelativeLayout>
 
 
-
-
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
-                    android:text="소집 날짜"/>
+                    android:text="입대 날짜"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"/>
 
                 <TextView
-                    android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
-                    android:textSize="16sp"
-                    android:hint="날짜를 선택해 주세요"
                     android:id="@+id/epTvStartingDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="?attr/editTextBackground"
+                    android:fontFamily="@font/spoqa_regular"
                     android:gravity="center_vertical"
-                    />
+                    android:hint="날짜를 선택해 주세요"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"
+                    android:theme="@style/ColoredHandleTheme"/>
 
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
-                    android:text="사용 연가 시"
-                    android:id="@+id/ep_TvUsedVacayH"/>
+                    android:text="사용 연가 시간"
+                    android:id="@+id/ep_TvUsedVacayH"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"/>
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:text="사용 연가"
-                    android:id="@+id/ep_TvUsedVacayD"/>
+                    android:id="@+id/ep_TvUsedVacayD"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"/>
 
                 <LinearLayout
                     android:layout_width = "match_parent"
@@ -131,20 +151,28 @@
                         android:inputType="number"
                         android:id="@+id/ep_EtPaidLeaveD"
                         android:textAlignment="textEnd"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:fontFamily="@font/spoqa_regular"
+                        android:textColor="@android:color/background_dark"
+                        android:theme="@style/ColoredHandleTheme"/>
                     <EditText
                         android:layout_width = "0dp"
                         android:layout_height = "wrap_content"
                         android:layout_weight="1"
                         android:inputType="number"
                         android:id="@+id/ep_EtPaidLeave"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:fontFamily="@font/spoqa_regular"
+                        android:textColor="@android:color/background_dark"
+                        android:theme="@style/ColoredHandleTheme"/>
                     <TextView
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
                         android:textSize="16sp"
                         android:text="일"
-                        android:id="@+id/ep_TvDay"/>
+                        android:id="@+id/ep_TvDay"
+                        android:fontFamily="@font/spoqa_medium"
+                        android:textColor="@android:color/background_dark"/>
 
                     <EditText
                         android:layout_width = "0dp"
@@ -153,13 +181,18 @@
                         android:inputType="number"
                         android:id="@+id/ep_EtPaidLeaveH"
                         android:textAlignment="textEnd"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:fontFamily="@font/spoqa_regular"
+                        android:textColor="@android:color/background_dark"
+                        android:theme="@style/ColoredHandleTheme"/>
                     <TextView
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
                         android:textSize="16sp"
                         android:text="시간"
-                        android:id="@+id/ep_TvHour"/>
+                        android:id="@+id/ep_TvHour"
+                        android:fontFamily="@font/spoqa_medium"
+                        android:textColor="@android:color/background_dark"/>
 
                     <EditText
                         android:layout_width = "0dp"
@@ -168,14 +201,18 @@
                         android:inputType="number"
                         android:id="@+id/ep_EtPaidLeaveM"
                         android:textAlignment="textEnd"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        android:fontFamily="@font/spoqa_regular"
+                        android:theme="@style/ColoredHandleTheme"/>
                     <TextView
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
                         android:textSize="16sp"
                         android:text="분"
                         android:id="@+id/ep_TvMinute"
-                        android:layout_marginEnd="26dp"/>
+                        android:layout_marginEnd="26dp"
+                        android:fontFamily="@font/spoqa_medium"
+                        android:textColor="@android:color/background_dark"/>
                 </LinearLayout>
 
                 <TextView
@@ -183,28 +220,38 @@
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:text="사용 포상휴가"
-                    android:id="@+id/ep_TvReward"/>
+                    android:id="@+id/ep_TvReward"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark" />
 
                 <EditText
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:inputType="number"
-                    android:id="@+id/ep_EtUsedReward"/>
+                    android:id="@+id/ep_EtUsedReward"
+                    android:fontFamily="@font/spoqa_regular"
+                    android:textColor="@android:color/background_dark"
+                    android:theme="@style/ColoredHandleTheme"/>
 
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:text="사용 위로휴가"
-                    android:id="@+id/ep_TvSpecial"/>
+                    android:id="@+id/ep_TvSpecial"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark" />
 
                 <EditText
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:inputType="number"
-                    android:id="@+id/ep_EtUsedSpecial"/>
+                    android:id="@+id/ep_EtUsedSpecial"
+                    android:fontFamily="@font/spoqa_regular"
+                    android:textColor="@android:color/background_dark"
+                    android:theme="@style/ColoredHandleTheme"/>
 
 
                 <TextView
@@ -212,13 +259,17 @@
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:text="사용 병가 시간"
-                    android:id="@+id/ep_TvSickH"/>
+                    android:id="@+id/ep_TvSickH"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"/>
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
                     android:text="사용 청원휴가(병가)"
-                    android:id="@+id/ep_TvSickD"/>
+                    android:id="@+id/ep_TvSickD"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"/>
 
                 <EditText
                     android:layout_width = "match_parent"
@@ -226,13 +277,19 @@
                     android:textSize="16sp"
                     android:hint="1일 병가 = 8시간 (사회복무요원 적용)"
                     android:inputType="number"
-                    android:id="@+id/ep_EtUsedSick"/>
+                    android:id="@+id/ep_EtUsedSick"
+                    android:fontFamily="@font/spoqa_regular"
+                    android:textColor="@android:color/background_dark"
+                    android:theme="@style/ColoredHandleTheme"/>
 
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
                     android:textSize="16sp"
-                    android:text="복무 연장 일수"/>
+                    android:text="복무 연장 일수"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/background_dark"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:layout_width = "match_parent"
@@ -241,7 +298,11 @@
                     android:textSize="16sp"
                     android:hint="분할복무 일수"
                     android:id="@+id/ep_EtPersonalLeave"
-                    android:inputType="date"/>
+                    android:inputType="date"
+                    android:fontFamily="@font/spoqa_regular"
+                    android:textColor="@android:color/background_dark"
+                    android:theme="@style/ColoredHandleTheme"
+                    android:visibility="gone"/>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

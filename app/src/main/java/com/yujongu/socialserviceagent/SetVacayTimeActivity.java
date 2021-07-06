@@ -176,7 +176,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -191,7 +191,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -205,7 +205,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -219,7 +219,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -235,7 +235,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -250,7 +250,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -264,7 +264,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -278,7 +278,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -294,7 +294,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -309,7 +309,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -323,7 +323,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -337,7 +337,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -353,7 +353,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -368,7 +368,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.DatePickerDialogTheme,
                     new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
@@ -382,7 +382,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
@@ -396,7 +396,7 @@ public class SetVacayTimeActivity extends AppCompatActivity implements View.OnCl
             final Calendar c = Calendar.getInstance();
             mHour = c.get(Calendar.HOUR_OF_DAY);
             mMinute = c.get(Calendar.MINUTE);
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerDialogTheme,
                     new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,

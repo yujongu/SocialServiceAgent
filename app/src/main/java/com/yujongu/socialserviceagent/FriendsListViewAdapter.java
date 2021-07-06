@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class FriendsListViewAdapter extends BaseAdapter {
 
     private CircleImageView thumbnailImg;
     private TextView friendNickName;
-    private Button friendListAddBtn;
+    private ImageButton friendListAddBtn;
     private TextView currStatusTv;
 
     String TAG = "FriendsListViewAdapterT";
