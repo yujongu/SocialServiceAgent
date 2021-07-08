@@ -147,6 +147,9 @@ public class SetVacayActivity extends Activity {
         confirm_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 Intent intent = new Intent(SetVacayActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -211,7 +214,6 @@ public class SetVacayActivity extends Activity {
                         .append(date.get(Calendar.MONTH) + 1).append("-")
                         .append(date.get(Calendar.DAY_OF_MONTH)).append("-")
                         .append(date.get(Calendar.YEAR)).append(" "));
-
     }
 
     public void showDateDialog(TextView dateDisplay, Calendar date) {
@@ -254,6 +256,5 @@ public class SetVacayActivity extends Activity {
                 break;
         }
     }
-
 
 }

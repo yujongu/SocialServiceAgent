@@ -68,7 +68,8 @@
                     android:layout_height="wrap_content"
                     android:text="연가"
                     android:buttonTint="@color/colorPrimary"
-                    android:fontFamily="@font/spoqa_medium"/>
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/black"/>
             </TableRow>
 
 
@@ -131,7 +132,9 @@
                     android:layout_height="wrap_content"
                     android:text="포상"
                     android:layout_weight="3"
-                    android:buttonTint="@color/colorPrimary"/>
+                    android:buttonTint="@color/colorPrimary"
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/black"/>
             </TableRow>
 
 
@@ -195,7 +198,8 @@
                     android:text="위로"
                     android:layout_weight="3"
                     android:buttonTint="@color/colorPrimary"
-                    android:fontFamily="@font/spoqa_medium"/>
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/black"/>
             </TableRow>
 
 
@@ -259,7 +263,8 @@
                     android:text="청원"
                     android:layout_weight="3"
                     android:buttonTint="@color/colorPrimary"
-                    android:fontFamily="@font/spoqa_medium"/>
+                    android:fontFamily="@font/spoqa_medium"
+                    android:textColor="@android:color/black"/>
             </TableRow>
 
 
